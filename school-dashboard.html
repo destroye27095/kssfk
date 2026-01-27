@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Dashboard - KSSFK</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/school-dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3">
+                <nav class="school-nav">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#school-info" onclick="showTab('school-info')">School Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#upload-media" onclick="showTab('upload-media')">Upload Media</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#post-vacancy" onclick="showTab('post-vacancy')">Post Vacancies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#post-jobs" onclick="showTab('post-jobs')">Post Jobs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#upload-results" onclick="showTab('upload-results')">Upload Results</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#manage-fees" onclick="showTab('manage-fees')">Manage Fees</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <!-- School Info -->
+                <div id="school-info" class="tab-content">
+                    <h2>School Information</h2>
+                    <div id="school-info-container"></div>
+                </div>
+
+                <!-- Media Upload -->
+                <div id="upload-media" class="tab-content" style="display:none;">
+                    <h2>Upload School Media</h2>
+                    <div id="upload-form-container"></div>
+                </div>
+
+                <!-- Vacancy Posting -->
+                <div id="post-vacancy" class="tab-content" style="display:none;">
+                    <h2>Post Vacancies</h2>
+                    <div id="vacancy-form-container"></div>
+                    <div id="vacancy-list-container" class="mt-4"></div>
+                </div>
+
+                <!-- Jobs Posting -->
+                <div id="post-jobs" class="tab-content" style="display:none;">
+                    <h2>Post Job Openings</h2>
+                    <div id="jobs-form-container"></div>
+                    <div id="jobs-list-container" class="mt-4"></div>
+                </div>
+
+                <!-- Upload Results -->
+                <div id="upload-results" class="tab-content" style="display:none;">
+                    <h2>Upload Academic Results</h2>
+                    <div id="results-upload-container"></div>
+                </div>
+
+                <!-- Manage Fees -->
+                <div id="manage-fees" class="tab-content" style="display:none;">
+                    <h2>Manage School Fees</h2>
+                    <div id="fees-table-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

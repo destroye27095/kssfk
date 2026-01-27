@@ -1,0 +1,63 @@
+[
+  {
+    "id": "vacancy-001",
+    "schoolId": "school-001",
+    "schoolName": "St. Mary's Academy",
+    "grade": "Grade 3",
+    "stream": "Coed",
+    "maxCapacity": 40,
+    "currentEnrollment": 38,
+    "postedDate": "2025-01-10T08:00:00Z",
+    "status": "open",
+    "termsAndConditions": "Academic excellence required. Interviews mandatory."
+  },
+  {
+    "id": "vacancy-002",
+    "schoolId": "school-002",
+    "schoolName": "Nairobi High School",
+    "grade": "Form 1",
+    "stream": "Coed",
+    "maxCapacity": 100,
+    "currentEnrollment": 95,
+    "postedDate": "2025-01-08T10:30:00Z",
+    "status": "open",
+    "termsAndConditions": "Entrance exam required."
+  },
+  {
+    "id": "vacancy-003",
+    "schoolId": "school-003",
+    "schoolName": "Lakewood Girls Academy",
+    "grade": "Form 2",
+    "stream": "Girls",
+    "maxCapacity": 50,
+    "currentEnrollment": 50,
+    "postedDate": "2025-01-15T09:00:00Z",
+    "status": "closed",
+    "closedDate": "2025-01-16T15:00:00Z",
+    "termsAndConditions": "No transfers accepted this term."
+  },
+  {
+    "id": "vacancy-004",
+    "schoolId": "school-006",
+    "schoolName": "Meru University",
+    "grade": "Undergraduate",
+    "stream": "Coed",
+    "maxCapacity": 5000,
+    "currentEnrollment": 4200,
+    "postedDate": "2025-01-05T12:00:00Z",
+    "status": "open",
+    "termsAndConditions": "KCSE score of minimum C+ required."
+  },
+  {
+    "id": "vacancy-005",
+    "schoolId": "school-005",
+    "schoolName": "Sunshine ECDE Centre",
+    "grade": "ECDE Class 2",
+    "stream": "Coed",
+    "maxCapacity": 30,
+    "currentEnrollment": 20,
+    "postedDate": "2025-01-20T14:15:00Z",
+    "status": "open",
+    "termsAndConditions": "Parent-teacher collaboration required."
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "payment-001",
+    "schoolId": "school-001",
+    "schoolName": "St. Mary's Academy",
+    "amount": 1000,
+    "paymentDate": "2025-01-10T09:30:00Z",
+    "status": "completed",
+    "paymentMethod": "Bank Transfer",
+    "transactionId": "BT20250110001",
+    "purpose": "Media Upload Fee"
+  },
+  {
+    "id": "payment-002",
+    "schoolId": "school-001",
+    "schoolName": "St. Mary's Academy",
+    "amount": 1000,
+    "paymentDate": "2025-01-18T10:15:00Z",
+    "status": "completed",
+    "paymentMethod": "Mobile Money",
+    "transactionId": "MM20250118002",
+    "purpose": "Media Upload Fee"
+  },
+  {
+    "id": "payment-003",
+    "schoolId": "school-003",
+    "schoolName": "Lakewood Girls Academy",
+    "amount": 1000,
+    "paymentDate": "2025-01-12T11:45:00Z",
+    "status": "completed",
+    "paymentMethod": "Bank Transfer",
+    "transactionId": "BT20250112003",
+    "purpose": "Media Upload Fee"
+  },
+  {
+    "id": "payment-004",
+    "schoolId": "school-002",
+    "schoolName": "Nairobi High School",
+    "amount": 1000,
+    "paymentDate": "2025-01-20T14:30:00Z",
+    "status": "pending",
+    "paymentMethod": "Bank Transfer",
+    "transactionId": "BT20250120004",
+    "purpose": "Media Upload Fee"
+  },
+  {
+    "id": "payment-005",
+    "schoolId": "school-006",
+    "schoolName": "Meru University",
+    "amount": 1000,
+    "paymentDate": "2025-01-19T16:20:00Z",
+    "status": "completed",
+    "paymentMethod": "Mobile Money",
+    "transactionId": "MM20250119005",
+    "purpose": "Media Upload Fee"
+  }
+]

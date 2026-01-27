@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About KSFP - Kenya School Fee Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            margin: 20px 0 10px;
+            font-size: 1.3em;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .feature h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .feature p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .developer-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .developer-card h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .developer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .info-item strong {
+            display: block;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-item {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+            border: 1px solid #667eea;
+        }
+
+        .signature {
+            text-align: center;
+            font-style: italic;
+            color: #764ba2;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #667eea;
+        }
+
+        .legal-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .legal-link {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #667eea;
+        }
+
+        .legal-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .legal-link a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 10px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+
+        .nav-links {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            margin: 0 15px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏫 Kenya School Fee Platform (KSFP)</h1>
+            <p>Enterprise-Grade School Discovery & Fee Management System</p>
+            <div>
+                <span class="version-badge">v1.0 Enterprise Edition</span>
+                <span class="status-badge">✓ Production Ready</span>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- About Section -->
+            <section class="section">
+                <h2>About KSFP</h2>
+                <p>
+                    Kenya School Fee Platform (KSFP) is a national-scale digital platform designed to revolutionize 
+                    how parents and schools interact. We provide transparent school information, secure payment processing, 
+                    and a trust-based rating system to help families make informed education decisions.
+                </p>
+                <p>
+                    Built with enterprise-grade architecture, KSFP ensures financial security, data integrity, and 
+                    accountability through ACID-compliant transactions, immutable audit trails, and comprehensive legal protection.
+                </p>
+            </section>
+
+            <!-- Key Features -->
+            <section class="section">
+                <h2>Key Features</h2>
+                <div class="features">
+                    <div class="feature">
+                        <h4>⭐ Star Rating System</h4>
+                        <p>1-5 star ratings based on fee transparency, academic results, upload accuracy, vacancy honesty, and parent feedback.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>💳 Secure Payments</h4>
+                        <p>ACID-compliant transaction processing with automated PDF receipt generation. Every transaction is immutably logged.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📋 School Directory</h4>
+                        <p>Comprehensive school information with verified data, location-based search, and fee comparison tools.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📜 Legal Protection</h4>
+                        <p>Comprehensive Terms & Conditions, Privacy Policy, Disclaimer, and Enforcement Policy ensuring liability clarity.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🔒 Fraud Detection</h4>
+                        <p>Automated fraud detection with penalty enforcement for fake information. 20% fee penalty for violators.</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📊 Audit Trails</h4>
+                        <p>Immutable hash-chained logs for all operations. Court-ready documentation with tamper detection.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technology Stack -->
+            <section class="section">
+                <h2>Technology Stack</h2>
+                <div class="tech-stack">
+                    <div class="tech-item">Node.js</div>
+                    <div class="tech-item">Express.js</div>
+                    <div class="tech-item">HTML5 / CSS3</div>
+                    <div class="tech-item">JavaScript</div>
+                    <div class="tech-item">JSON Database</div>
+                    <div class="tech-item">SHA-256 Hashing</div>
+                    <div class="tech-item">PDF Generation</div>
+                    <div class="tech-item">Chart.js Analytics</div>
+                </div>
+
+                <h3>Enterprise Features</h3>
+                <p><strong>ACID Transactions:</strong> All payment operations guaranteed atomic (all-or-nothing) for data consistency.</p>
+                <p><strong>Immutable Logging:</strong> Hash-chained audit logs prevent tampering with permanent records.</p>
+                <p><strong>PCI-DSS Compliance:</strong> Payment processing follows industry standards without storing card details.</p>
+                <p><strong>Data Encryption:</strong> AES-256 encryption for sensitive data at rest, TLS 1.2+ in transit.</p>
+            </section>
+
+            <!-- Developer Information -->
+            <section class="section">
+                <h2>Developer & Attribution</h2>
+                <div class="developer-card">
+                    <h3>👨‍💻 Primary Developer</h3>
+                    <div class="developer-info">
+                        <div class="info-item">
+                            <strong>Name:</strong>
+                            Wamoto Raphael
+                        </div>
+                        <div class="info-item">
+                            <strong>Institution:</strong>
+                            Meru University
+                        </div>
+                        <div class="info-item">
+                            <strong>Department:</strong>
+                            Information Technology
+                        </div>
+                        <div class="info-item">
+                            <strong>Phone:</strong>
+                            +254 768 331 888
+                        </div>
+                        <div class="info-item">
+                            <strong>Email:</strong>
+                            wamotoraphael327@gmail.com
+                        </div>
+                        <div class="info-item">
+                            <strong>Build Date:</strong>
+                            January 27, 2026
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Details -->
+            <section class="section">
+                <h2>Project Details</h2>
+                
+                <h3>Scope & Deployment</h3>
+                <p>
+                    <strong>Geographic Scope:</strong> Kenya-wide national deployment<br>
+                    <strong>Scale:</strong> Multi-institutional platform supporting unlimited schools and parents<br>
+                    <strong>Deployment Model:</strong> Cloud-ready, containerizable architecture<br>
+                    <strong>Target Users:</strong> School administrators, parents, education authorities
+                </p>
+
+                <h3>Development Timeline</h3>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li><strong>Phase 1 (January 2026):</strong> Initial platform with 100+ files</li>
+                    <li><strong>Phase 2 (January 2026):</strong> Enterprise architecture with ratings, payments, legal framework</li>
+                    <li><strong>Phase 3 (February 2026):</strong> Beta testing and security audits</li>
+                    <li><strong>Phase 4 (March 2026):</strong> Production deployment</li>
+                </ul>
+
+                <h3>Compliance & Standards</h3>
+                <ul style="margin-left: 20px; color: #555;">
+                    <li>✓ ACID-compliant transaction processing (Atomicity, Consistency, Isolation, Durability)</li>
+                    <li>✓ Immutable audit trails (tamper-proof logging)</li>
+                    <li>✓ Kenya data protection requirements</li>
+                    <li>✓ PCI-DSS payment card security standards</li>
+                    <li>✓ Enterprise security best practices</li>
+                    <li>✓ Court-ready documentation and evidence handling</li>
+                </ul>
+            </section>
+
+            <!-- Legal & Compliance -->
+            <section class="section">
+                <h2>Legal Framework</h2>
+                <p>
+                    KSFP is backed by comprehensive legal documentation designed to protect all stakeholders 
+                    and ensure clear liability boundaries.
+                </p>
+                <div class="legal-links">
+                    <div class="legal-link">
+                        <h4>📋 Terms & Conditions</h4>
+                        <p>Rights, obligations, and enforcement mechanisms</p>
+                        <a href="/docs/terms-and-conditions.md">Read Full Terms →</a>
+                    </div>
+                    <div class="legal-link">
+                        <h4>🔐 Privacy Policy</h4>
+                        <p>Data collection, protection, and user rights</p>
+                        <a href="/docs/privacy-policy.md">Read Policy →</a>
+                    </div>
+                    <div class="legal-link">
+                        <h4>⚠️ Disclaimer</h4>
+                        <p>Liability limitations and risk acknowledgment</p>
+                        <a href="/docs/disclaimer.md">Read Disclaimer →</a>
+                    </div>
+                    <div class="legal-link">
+                        <h4>⚖️ Enforcement Policy</h4>
+                        <p>Fraud detection and penalty procedures</p>
+                        <a href="/docs/enforcement-policy.md">Read Policy →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Signature -->
+            <div class="signature">
+                <p style="font-size: 1.2em; margin: 20px 0;">
+                    <strong>"Served by KSFP courtesy of the school looked in"</strong>
+                </p>
+                <p style="margin-bottom: 0;">
+                    This signature appears on every receipt, log entry, and system communication to affirm 
+                    platform authenticity and commitment to transparency.
+                </p>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-links">
+                <a href="/">← Back to Home</a>
+                <a href="/admin">Admin Dashboard</a>
+                <a href="/dashboard">School Dashboard</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Kenya School Fee Platform (KSFP) v1.0 Enterprise Edition</p>
+            <p>© 2026 Wamoto Raphael, Meru University. All Rights Reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #999;">
+                Designed for production deployment | Built for national scale | Ready for trust
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

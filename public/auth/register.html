@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSFP - Register Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/buttons.css">
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <h1 class="auth-title">
+                    <i class="fas fa-graduation-cap"></i> KSFP
+                </h1>
+                <p class="auth-subtitle">Kenya School Fee Platform</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="auth-content">
+                <h2 class="mb-3">Create Account</h2>
+                <p class="text-muted mb-4">Join thousands of parents managing school fees securely</p>
+
+                <!-- Status Messages -->
+                <div id="statusAlert" class="alert alert-info d-none" role="alert">
+                    <i class="fas fa-info-circle"></i> <span id="statusMessage"></span>
+                </div>
+
+                <!-- Registration Form -->
+                <form id="registerForm">
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input 
+                            type="text" 
+                            class="form-control form-control-lg" 
+                            id="fullName" 
+                            placeholder="Your full name"
+                            required
+                        >
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input 
+                            type="email" 
+                            class="form-control form-control-lg" 
+                            id="email" 
+                            placeholder="your@email.com"
+                        >
+                        <small class="form-text text-muted">Optional but recommended</small>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                        <input 
+                            type="tel" 
+                            class="form-control form-control-lg" 
+                            id="phoneNumber" 
+                            placeholder="+254 700 000 000"
+                            required
+                        >
+                        <small class="form-text text-muted">For SMS verification and payments</small>
+                    </div>
+
+                    <!-- Role Selection -->
+                    <div class="mb-3">
+                        <label class="form-label">I am a:</label>
+                        <div class="role-selection">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" id="roleParent" value="parent" checked>
+                                <label class="form-check-label" for="roleParent">
+                                    <i class="fas fa-user"></i> Parent / Guardian
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" id="roleSchool" value="school">
+                                <label class="form-check-label" for="roleSchool">
+                                    <i class="fas fa-school"></i> School Administrator
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms & Conditions -->
+                    <div class="mb-3 form-check">
+                        <input 
+                            type="checkbox" 
+                            class="form-check-input" 
+                            id="termsCheckbox"
+                            required
+                        >
+                        <label class="form-check-label" for="termsCheckbox">
+                            I agree to KSFP <a href="/docs/terms-and-conditions.md" target="_blank">Terms & Conditions</a> 
+                            and <a href="/docs/privacy-policy.md" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- OAuth Options -->
+                <button type="button" class="btn btn-auth btn-google w-100 mb-2" id="googleRegisterBtn">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </button>
+
+                <button type="button" class="btn btn-auth btn-facebook w-100" id="facebookRegisterBtn">
+                    <i class="fab fa-facebook-f"></i> Sign up with Facebook
+                </button>
+
+                <!-- Footer -->
+                <div class="auth-footer">
+                    <p class="mb-0">Already have an account? 
+                        <a href="login.html" class="auth-link">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Info -->
+        <div class="security-info">
+            <p>
+                <i class="fas fa-shield-alt"></i>
+                Your information is protected by enterprise-grade encryption
+            </p>
+        </div>
+    </div>
+
+    <!-- Google OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Facebook SDK -->
+    <script async defer crossorigin="anonymous" 
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" 
+        nonce="FACEBOOK_NONCE"></script>
+
+    <!-- Auth Scripts -->
+    <script src="../js/auth/session-manager.js"></script>
+    <script src="../js/auth/google-auth.js"></script>
+    <script src="../js/auth/facebook-auth.js"></script>
+    <script src="../js/auth/phone-auth.js"></script>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const role = document.querySelector('input[name="role"]:checked').value;
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        full_name: fullName,
+                        email: email,
+                        phone_number: phoneNumber,
+                        role: role
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Redirect to OTP verification
+                    window.location.href = `/auth/verify-otp.html?phone=${encodeURIComponent(phoneNumber)}&userId=${data.user_id}`;
+                } else {
+                    showAlert('error', data.message || 'Registration failed');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error. Please try again.');
+            }
+        });
+
+        function showAlert(type, message) {
+            const alert = document.getElementById('statusAlert');
+            const messageEl = document.getElementById('statusMessage');
+            alert.className = `alert alert-${type === 'error' ? 'danger' : 'success'}`;
+            messageEl.textContent = message;
+            alert.classList.remove('d-none');
+        }
+    </script>
+</body>
+</html>

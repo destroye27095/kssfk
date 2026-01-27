@@ -1,0 +1,70 @@
+[
+  {
+    "id": "upload-001",
+    "schoolId": "school-001",
+    "schoolName": "St. Mary's Academy",
+    "title": "Campus Photos 2025",
+    "type": "Images",
+    "description": "Photos of school campus, classrooms, and facilities",
+    "uploadedDate": "2025-01-15T10:30:00Z",
+    "status": "approved",
+    "approvedDate": "2025-01-16T14:20:00Z",
+    "termsAccepted": true,
+    "paymentVerified": true,
+    "fileType": "image/jpeg"
+  },
+  {
+    "id": "upload-002",
+    "schoolId": "school-001",
+    "schoolName": "St. Mary's Academy",
+    "title": "School Documentary",
+    "type": "Videos",
+    "description": "A short documentary about school culture and academics",
+    "uploadedDate": "2025-01-18T11:45:00Z",
+    "status": "pending",
+    "termsAccepted": true,
+    "paymentVerified": true,
+    "fileType": "video/mp4"
+  },
+  {
+    "id": "upload-003",
+    "schoolId": "school-003",
+    "schoolName": "Lakewood Girls Academy",
+    "title": "2024 Academic Results",
+    "type": "Documents",
+    "description": "Academic performance summary for 2024",
+    "uploadedDate": "2025-01-12T09:15:00Z",
+    "status": "approved",
+    "approvedDate": "2025-01-13T16:30:00Z",
+    "termsAccepted": true,
+    "paymentVerified": true,
+    "fileType": "application/pdf"
+  },
+  {
+    "id": "upload-004",
+    "schoolId": "school-002",
+    "schoolName": "Nairobi High School",
+    "title": "School Brochure",
+    "type": "Documents",
+    "description": "Comprehensive school information brochure",
+    "uploadedDate": "2025-01-20T13:22:00Z",
+    "status": "pending",
+    "termsAccepted": true,
+    "paymentVerified": true,
+    "fileType": "application/pdf"
+  },
+  {
+    "id": "upload-005",
+    "schoolId": "school-006",
+    "schoolName": "Meru University",
+    "title": "Campus Virtual Tour",
+    "type": "Videos",
+    "description": "360-degree virtual campus tour",
+    "uploadedDate": "2025-01-19T15:45:00Z",
+    "status": "approved",
+    "approvedDate": "2025-01-19T18:30:00Z",
+    "termsAccepted": true,
+    "paymentVerified": true,
+    "fileType": "video/mp4"
+  }
+]

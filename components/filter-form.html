@@ -1,0 +1,53 @@
+<!-- Filter Form Component -->
+<form class="filter-form" id="schoolFilterForm">
+    <div class="filter-row">
+        <div class="filter-group">
+            <label for="levelFilter">School Level</label>
+            <select id="levelFilter" class="form-control">
+                <option value="">All Levels</option>
+                <option value="ECDE">ECDE</option>
+                <option value="Primary">Primary</option>
+                <option value="Secondary">Secondary</option>
+                <option value="University">University</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="typeFilter">School Type</label>
+            <select id="typeFilter" class="form-control">
+                <option value="">All Types</option>
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="streamFilter">Stream/Gender</label>
+            <select id="streamFilter" class="form-control">
+                <option value="">All Streams</option>
+                <option value="Coed">Co-educational</option>
+                <option value="Boys">Boys Only</option>
+                <option value="Girls">Girls Only</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="maxFeeFilter">Max Monthly Fee (KES)</label>
+            <input type="number" id="maxFeeFilter" class="form-control" placeholder="Enter maximum fee">
+        </div>
+
+        <div class="filter-group">
+            <label for="sortFilter">Sort By</label>
+            <select id="sortFilter" class="form-control">
+                <option value="score">Best Match</option>
+                <option value="fee">Fee (Low to High)</option>
+                <option value="name">School Name (A-Z)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="filter-actions">
+        <button type="button" class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+        <button type="button" class="btn btn-secondary" onclick="resetFilters()">Reset</button>
+    </div>
+</form>

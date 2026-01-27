@@ -1,0 +1,45 @@
+<!-- Upload Form Component -->
+<form class="upload-form" id="schoolUploadForm">
+    <div class="form-group">
+        <label for="uploadTitle">Upload Title</label>
+        <input type="text" id="uploadTitle" class="form-control" placeholder="Enter upload title" required>
+    </div>
+
+    <div class="form-group">
+        <label for="uploadType">Upload Type</label>
+        <select id="uploadType" class="form-control" required>
+            <option value="">Select Type</option>
+            <option value="Images">Images</option>
+            <option value="Videos">Videos</option>
+            <option value="Documents">Documents</option>
+            <option value="Academic Results">Academic Results</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="uploadDescription">Description</label>
+        <textarea id="uploadDescription" class="form-control" placeholder="Describe the upload" rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="uploadFile">Select File</label>
+        <input type="file" id="uploadFile" class="form-control" required>
+        <small>Accepted: JPEG, PNG, MP4, PDF (Max 100MB)</small>
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="uploadTerms" required>
+            I accept the Terms & Conditions
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>
+            <input type="checkbox" id="uploadPayment" required>
+            I verify payment of KES 1,000
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Submit Upload</button>
+</form>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - KSSFK</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-container"></div>
+
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-md-3">
+                <nav class="admin-nav">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#schools" onclick="showTab('schools')">Manage Schools</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#uploads" onclick="showTab('uploads')">Approve Uploads</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#payments" onclick="showTab('payments')">Payment Records</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#penalties" onclick="showTab('penalties')">Penalties & Enforcement</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#analytics" onclick="showTab('analytics')">Analytics</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <!-- Schools Management -->
+                <div id="schools" class="tab-content">
+                    <h2>School Management</h2>
+                    <div id="school-list-container"></div>
+                    <button class="btn btn-primary mt-3" onclick="addSchool()">Add New School</button>
+                </div>
+
+                <!-- Uploads Approval -->
+                <div id="uploads" class="tab-content" style="display:none;">
+                    <h2>Approve School Uploads</h2>
+                    <div id="uploads-approval-container"></div>
+                </div>
+
+                <!-- Payment Records -->
+                <div id="payments" class="tab-content" style="display:none;">
+                    <h2>Payment Records</h2>
+                    <div id="payments-table-container"></div>
+                </div>
+
+                <!-- Penalties Enforcement -->
+                <div id="penalties" class="tab-content" style="display:none;">
+                    <h2>Penalties & Enforcement</h2>
+                    <div id="penalties-list-container"></div>
+                </div>
+
+                <!-- Analytics -->
+                <div id="analytics" class="tab-content" style="display:none;">
+                    <h2>Platform Analytics</h2>
+                    <div id="admin-analytics-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/chart.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

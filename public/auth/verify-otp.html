@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSFP - Verify OTP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/buttons.css">
+    <style>
+        .otp-input-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .otp-input {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        .otp-input.filled {
+            background-color: #f8f9fa;
+        }
+
+        .timer {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .timer.warning {
+            color: #ff6b6b;
+        }
+
+        .resend-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .resend-link a {
+            cursor: pointer;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .resend-link a:hover {
+            text-decoration: underline;
+        }
+
+        .resend-link a.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <h1 class="auth-title">
+                    <i class="fas fa-graduation-cap"></i> KSFP
+                </h1>
+                <p class="auth-subtitle">Kenya School Fee Platform</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="auth-content">
+                <div class="text-center mb-4">
+                    <div class="step-indicator">
+                        <h2>Verify Your Phone</h2>
+                        <p class="text-muted">We sent a 6-digit code to <strong id="displayPhone"></strong></p>
+                    </div>
+                </div>
+
+                <!-- Status Messages -->
+                <div id="statusAlert" class="alert alert-info d-none" role="alert">
+                    <i class="fas fa-info-circle"></i> <span id="statusMessage"></span>
+                </div>
+
+                <!-- OTP Input Form -->
+                <form id="otpForm">
+                    <label class="form-label">Enter Verification Code</label>
+                    
+                    <div class="otp-input-group" id="otpInputGroup">
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                        <input type="text" class="otp-input" maxlength="1" inputmode="numeric" required>
+                    </div>
+
+                    <!-- Timer -->
+                    <div class="timer" id="timer">
+                        Code expires in <span id="timeLeft">5:00</span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">
+                        <i class="fas fa-check"></i> Verify Code
+                    </button>
+                </form>
+
+                <!-- Resend Option -->
+                <div class="resend-link">
+                    <p>Didn't receive the code?</p>
+                    <a id="resendLink" href="#" class="disabled">Resend Code</a>
+                    <p class="text-muted small" id="resendInfo">Request new code after <span id="resendTimer">0:30</span></p>
+                </div>
+
+                <!-- Change Phone -->
+                <div class="text-center mt-4">
+                    <a href="login.html" class="text-muted small">Use different phone number</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Info -->
+        <div class="security-info">
+            <p>
+                <i class="fas fa-lock"></i>
+                OTP codes expire after 5 minutes for your security
+            </p>
+        </div>
+    </div>
+
+    <script src="../js/auth/session-manager.js"></script>
+    <script src="../js/auth/otp-handler.js"></script>
+
+    <script>
+        let phoneNumber = new URLSearchParams(window.location.search).get('phone');
+        let userId = new URLSearchParams(window.location.search).get('userId');
+        let otpTimer = 300; // 5 minutes
+        let resendTimer = 30;
+        let canResend = false;
+
+        // Display phone number
+        document.getElementById('displayPhone').textContent = phoneNumber;
+
+        // OTP Input Handler
+        const otpInputs = document.querySelectorAll('.otp-input');
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', function(e) {
+                if (!/^\d*$/.test(this.value)) {
+                    this.value = '';
+                    return;
+                }
+
+                if (this.value.length === 1) {
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                }
+
+                this.classList.toggle('filled', this.value !== '');
+            });
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text');
+                if (!/^\d{6}$/.test(pastedData)) return;
+
+                const digits = pastedData.split('');
+                digits.forEach((digit, i) => {
+                    if (index + i < otpInputs.length) {
+                        otpInputs[index + i].value = digit;
+                        otpInputs[index + i].classList.add('filled');
+                    }
+                });
+
+                otpInputs[Math.min(index + 5, otpInputs.length - 1)].focus();
+            });
+        });
+
+        // OTP Form Submit
+        document.getElementById('otpForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const otp = Array.from(otpInputs)
+                .map(input => input.value)
+                .join('');
+
+            if (otp.length !== 6) {
+                showAlert('error', 'Please enter a valid 6-digit code');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/verify-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        phone_number: phoneNumber,
+                        otp: otp
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store JWT token
+                    SessionManager.setToken(data.token);
+                    SessionManager.setUser(data.user);
+
+                    showAlert('success', 'Phone verified successfully!');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1500);
+                } else {
+                    showAlert('error', data.message || 'Invalid OTP');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error. Please try again.');
+            }
+        });
+
+        // Resend OTP
+        document.getElementById('resendLink').addEventListener('click', async function(e) {
+            e.preventDefault();
+            if (!canResend) return;
+
+            try {
+                const response = await fetch('/api/auth/resend-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone_number: phoneNumber,
+                        user_id: userId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('success', 'New code sent to your phone');
+                    otpTimer = 300;
+                    resendTimer = 30;
+                    canResend = false;
+                    updateResendLink();
+                } else {
+                    showAlert('error', data.message || 'Failed to resend code');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error. Please try again.');
+            }
+        });
+
+        // Timer Functions
+        function startTimers() {
+            setInterval(updateOtpTimer, 1000);
+            setInterval(updateResendTimer, 1000);
+        }
+
+        function updateOtpTimer() {
+            otpTimer--;
+            const minutes = Math.floor(otpTimer / 60);
+            const seconds = otpTimer % 60;
+            document.getElementById('timeLeft').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            const timerEl = document.getElementById('timer');
+            if (otpTimer < 60) {
+                timerEl.classList.add('warning');
+            }
+
+            if (otpTimer <= 0) {
+                disableOtpForm();
+            }
+        }
+
+        function updateResendTimer() {
+            if (resendTimer > 0) {
+                resendTimer--;
+                document.getElementById('resendTimer').textContent = 
+                    `0:${resendTimer.toString().padStart(2, '0')}`;
+            } else {
+                canResend = true;
+                updateResendLink();
+            }
+        }
+
+        function updateResendLink() {
+            const link = document.getElementById('resendLink');
+            const info = document.getElementById('resendInfo');
+
+            if (canResend) {
+                link.classList.remove('disabled');
+                info.style.display = 'none';
+            } else {
+                link.classList.add('disabled');
+                info.style.display = 'block';
+            }
+        }
+
+        function disableOtpForm() {
+            otpInputs.forEach(input => input.disabled = true);
+            document.getElementById('otpForm').style.opacity = '0.5';
+            showAlert('error', 'OTP expired. Please request a new code.');
+        }
+
+        function showAlert(type, message) {
+            const alert = document.getElementById('statusAlert');
+            const messageEl = document.getElementById('statusMessage');
+            alert.className = `alert alert-${type === 'error' ? 'danger' : 'success'}`;
+            messageEl.textContent = message;
+            alert.classList.remove('d-none');
+        }
+
+        // Initialize
+        startTimers();
+        updateResendLink();
+    </script>
+</body>
+</html>

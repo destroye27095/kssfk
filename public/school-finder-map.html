@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Finder - KSFP</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin: 5px 0 0 0;
+        }
+
+        .container-flex {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 380px;
+            background: white;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .map {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .filter-section {
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #2c3e50;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-title i {
+            font-size: 1.1em;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 0.9em;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .range-slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .range-value {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.85em;
+            color: #7f8c8d;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .checkbox-item:hover {
+            background: #f5f7fa;
+        }
+
+        .checkbox-item input {
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            margin: 0;
+            flex: 1;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-filter {
+            flex: 1;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-filter:hover {
+            background: #5568d3;
+            text-decoration: none;
+            color: white;
+        }
+
+        .btn-reset {
+            flex: 1;
+            padding: 10px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-reset:hover {
+            background: #bdc3c7;
+        }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .results-count {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        .list-toggle {
+            font-size: 0.9em;
+            background: none;
+            border: none;
+            color: #667eea;
+            cursor: pointer;
+        }
+
+        .school-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 4px solid #667eea;
+        }
+
+        .school-item:hover {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .school-item.selected {
+            background: white;
+            box-shadow: 0 2px 12px rgba(102, 126, 234, 0.3);
+            border-left-color: #27ae60;
+        }
+
+        .school-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .school-meta {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .school-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .stars {
+            color: #f39c12;
+            font-size: 1em;
+        }
+
+        .rating-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .marker-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8em;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .marker-excellent {
+            background: #27ae60;
+        }
+
+        .marker-good {
+            background: #f39c12;
+        }
+
+        .marker-average {
+            background: #e74c3c;
+        }
+
+        .marker-poor {
+            background: #95a5a6;
+        }
+
+        .popup {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .popup-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .popup-info {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            margin-bottom: 4px;
+        }
+
+        .popup-rating {
+            margin-top: 8px;
+            font-weight: 600;
+            color: #f39c12;
+        }
+
+        .view-profile {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .view-profile:hover {
+            background: #5568d3;
+            text-decoration: none;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .view-btn {
+            flex: 1;
+            padding: 8px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: 2px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .view-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container-flex {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 400px;
+            }
+
+            #map {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="container-fluid">
+            <h1 class="header-title">
+                <i class="fas fa-map-location-dot"></i> School Finder
+            </h1>
+            <p class="header-subtitle">Find schools near you with transparent ratings</p>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="container-flex">
+        <!-- SIDEBAR - FILTERS -->
+        <div class="sidebar">
+            <!-- LOCATION SEARCH -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-location-crosshairs"></i> Your Location
+                </div>
+                <input type="text" id="locationSearch" class="search-input" placeholder="Enter address or area...">
+                <button class="btn btn-sm btn-info mt-2" onclick="getUserLocation()">
+                    <i class="fas fa-crosshairs"></i> Use My Location
+                </button>
+            </div>
+
+            <!-- DISTANCE FILTER -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-ruler"></i> Distance
+                </div>
+                <input type="range" id="distanceSlider" class="range-slider" min="1" max="50" value="20">
+                <div class="range-value">
+                    <span>Up to <strong id="distanceValue">20</strong> km</span>
+                </div>
+            </div>
+
+            <!-- RATING FILTER -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-star"></i> Minimum Rating
+                </div>
+                <input type="range" id="ratingSlider" class="range-slider" min="1" max="5" step="0.5" value="2.5">
+                <div class="range-value">
+                    <span id="ratingValue">⭐⭐⭐ 2.5+ stars</span>
+                </div>
+            </div>
+
+            <!-- ENVIRONMENT FILTER -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-leaf"></i> Environment
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="CALM" class="env-filter">
+                        <label>🌿 Calm & Peaceful</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="MODERATE" class="env-filter">
+                        <label>😊 Moderate</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="BUSY" class="env-filter">
+                        <label>🚗 Busy Urban</label>
+                    </label>
+                </div>
+            </div>
+
+            <!-- SECURITY FILTER -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-shield-alt"></i> Security Level
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="HIGH" class="sec-filter">
+                        <label>✅ High Security</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="MEDIUM" class="sec-filter">
+                        <label>⚠️ Medium Security</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="LOW" class="sec-filter">
+                        <label>❌ Low Security</label>
+                    </label>
+                </div>
+            </div>
+
+            <!-- CURRICULUM FILTER -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-book"></i> Curriculum
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="STEM" class="curr-filter">
+                        <label>🔬 STEM Programs</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="ARTS" class="curr-filter">
+                        <label>🎨 Arts Programs</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="SPORTS" class="curr-filter">
+                        <label>⚽ Sports Programs</label>
+                    </label>
+                </div>
+            </div>
+
+            <!-- FEES FILTER -->
+            <div class="filter-section">
+                <div class="filter-title">
+                    <i class="fas fa-wallet"></i> Fees
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="FREE" class="fee-filter">
+                        <label>🎓 Free/ASAL</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="AFFORDABLE" class="fee-filter">
+                        <label>💚 Below 50k</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="MODERATE" class="fee-filter">
+                        <label>💙 50-100k</label>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="EXPENSIVE" class="fee-filter">
+                        <label>💜 100k+</label>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="button-group">
+                <button class="btn-filter" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i> Apply Filters
+                </button>
+                <button class="btn-reset" onclick="resetFilters()">
+                    <i class="fas fa-refresh"></i> Reset
+                </button>
+            </div>
+
+            <!-- RESULTS -->
+            <div style="margin-top: 25px;">
+                <div class="results-header">
+                    <span class="results-count">
+                        <strong id="schoolCount">0</strong> schools found
+                    </span>
+                </div>
+
+                <div class="view-toggle">
+                    <button class="view-btn active" onclick="switchView('map')">
+                        <i class="fas fa-map"></i> Map
+                    </button>
+                    <button class="view-btn" onclick="switchView('list')">
+                        <i class="fas fa-list"></i> List
+                    </button>
+                </div>
+
+                <div id="resultsList"></div>
+            </div>
+        </div>
+
+        <!-- MAP -->
+        <div class="map">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let map;
+        let userMarker;
+        let schoolMarkers = [];
+        let allSchools = [];
+        let filteredSchools = [];
+        let currentView = 'map';
+
+        // Initialize map
+        function initMap() {
+            map = L.map('map').setView([-1.286389, 36.817223], 9); // Center on Kenya
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Add search circle
+            L.circle([-1.286389, 36.817223], 20000 * document.getElementById('distanceSlider').value).addTo(map);
+        }
+
+        // Get user location
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const {latitude, longitude} = position.coords;
+                    
+                    // Place user marker
+                    if (userMarker) map.removeLayer(userMarker);
+                    userMarker = L.circleMarker([latitude, longitude], {
+                        radius: 8,
+                        fillColor: '#667eea',
+                        color: white,
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+
+                    // Center map
+                    map.setView([latitude, longitude], 14);
+                });
+            } else {
+                alert('Geolocation not supported');
+            }
+        }
+
+        // Load schools from API
+        async function loadSchools() {
+            try {
+                const response = await fetch('/api/schools');
+                const data = await response.json();
+                allSchools = data.schools || [];
+                filteredSchools = allSchools;
+                displaySchools();
+            } catch (error) {
+                console.error('Error loading schools:', error);
+            }
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const distance = parseFloat(document.getElementById('distanceSlider').value);
+            const rating = parseFloat(document.getElementById('ratingSlider').value);
+
+            const envTypes = Array.from(document.querySelectorAll('.env-filter:checked')).map(el => el.value);
+            const secLevels = Array.from(document.querySelectorAll('.sec-filter:checked')).map(el => el.value);
+            const curriculums = Array.from(document.querySelectorAll('.curr-filter:checked')).map(el => el.value);
+            const fees = Array.from(document.querySelectorAll('.fee-filter:checked')).map(el => el.value);
+
+            filteredSchools = allSchools.filter(school => {
+                if (school.star_rating < rating) return false;
+                if (school.distance_km > distance) return false;
+                if (envTypes.length && !envTypes.includes(school.environment_type)) return false;
+                if (secLevels.length && !secLevels.includes(school.security_level)) return false;
+                if (curriculums.length && !school.courses.some(c => curriculums.includes(c.category))) return false;
+                return true;
+            });
+
+            displaySchools();
+        }
+
+        function resetFilters() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+            document.getElementById('distanceSlider').value = 20;
+            document.getElementById('ratingSlider').value = 2.5;
+            document.getElementById('distanceValue').textContent = '20';
+            document.getElementById('ratingValue').textContent = '⭐⭐⭐ 2.5+ stars';
+            filteredSchools = allSchools;
+            displaySchools();
+        }
+
+        // Display schools on map and list
+        function displaySchools() {
+            clearMarkers();
+            document.getElementById('schoolCount').textContent = filteredSchools.length;
+            document.getElementById('resultsList').innerHTML = '';
+
+            filteredSchools.forEach(school => {
+                // Add marker
+                const markerClass = school.star_rating >= 4 ? 'marker-excellent' :
+                                  school.star_rating >= 3 ? 'marker-good' :
+                                  school.star_rating >= 2 ? 'marker-average' : 'marker-poor';
+
+                const marker = L.marker([school.latitude, school.longitude], {
+                    icon: L.divIcon({
+                        html: `<div class="marker-icon ${markerClass}">★</div>`,
+                        iconSize: [32, 32],
+                        className: ''
+                    })
+                }).addTo(map);
+
+                marker.bindPopup(`
+                    <div class="popup">
+                        <div class="popup-title">${school.name}</div>
+                        <div class="popup-info">📍 ${school.county}</div>
+                        <div class="popup-info">📏 ${school.distance_km.toFixed(1)} km away</div>
+                        <div class="popup-info">👨‍🏫 Ratio: 1:${Math.round(school.student_teacher_ratio)}</div>
+                        <div class="popup-rating">${getStars(school.star_rating)} ${school.star_rating.toFixed(1)}</div>
+                        <a href="/school-profile.html?id=${school.id}" class="view-profile">View Profile →</a>
+                    </div>
+                `);
+
+                schoolMarkers.push(marker);
+
+                // Add to list
+                const listHtml = `
+                    <div class="school-item" onclick="selectSchool(${school.id}, [${school.latitude}, ${school.longitude}])">
+                        <div class="school-name">${school.name}</div>
+                        <div class="school-meta">
+                            <span>📍 ${school.county}</span>
+                            <span>📏 ${school.distance_km.toFixed(1)} km</span>
+                        </div>
+                        <div class="school-rating">
+                            <span class="stars">${getStars(school.star_rating)}</span>
+                            <span class="rating-value">${school.star_rating.toFixed(1)}</span>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('resultsList').innerHTML += listHtml;
+            });
+        }
+
+        function clearMarkers() {
+            schoolMarkers.forEach(marker => map.removeLayer(marker));
+            schoolMarkers = [];
+        }
+
+        function selectSchool(id, coords) {
+            map.setView(coords, 15);
+            const marker = schoolMarkers.find(m => m.getLatLng().lat === coords[0]);
+            if (marker) marker.openPopup();
+        }
+
+        function getStars(rating) {
+            let stars = '';
+            const full = Math.floor(rating);
+            const half = rating % 1 >= 0.5 ? 1 : 0;
+            for (let i = 0; i < full; i++) stars += '★';
+            if (half) stars += '⭐';
+            for (let i = 0; i < 5 - full - half; i++) stars += '☆';
+            return stars;
+        }
+
+        function switchView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Update range slider values
+        document.getElementById('distanceSlider').addEventListener('input', e => {
+            document.getElementById('distanceValue').textContent = e.target.value;
+        });
+
+        document.getElementById('ratingSlider').addEventListener('input', e => {
+            const stars = parseFloat(e.target.value);
+            const filled = Math.floor(stars);
+            const half = stars % 1 >= 0.5 ? '⭐' : '';
+            let visual = '';
+            for (let i = 0; i < filled; i++) visual += '★';
+            visual += half;
+            for (let i = 0; i < 5 - filled - (half ? 1 : 0); i++) visual += '☆';
+            document.getElementById('ratingValue').textContent = `${visual} ${stars.toFixed(1)}+ stars`;
+        });
+
+        // Initialize
+        initMap();
+        loadSchools();
+    </script>
+</body>
+</html>

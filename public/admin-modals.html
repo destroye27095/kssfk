@@ -1,0 +1,737 @@
+<!-- Add School Modal -->
+<div class="modal fade" id="addSchoolModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Add New School</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSchoolForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">School Name *</label>
+                            <input type="text" class="form-control" id="schoolName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Institution Type *</label>
+                            <select class="form-select" id="institutionType" required onchange="updateHierarchyOptions()">
+                                <option value="">Select Type</option>
+                                <option value="university">University</option>
+                                <option value="college">College</option>
+                                <option value="vocational">Vocational Center</option>
+                                <option value="senior_school">Senior School</option>
+                                <option value="junior_school">Junior School</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Location *</label>
+                            <input type="text" class="form-control" id="schoolLocation" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Level</label>
+                            <select class="form-select" id="schoolLevel">
+                                <option value="">Select Level</option>
+                                <option value="primary">Primary</option>
+                                <option value="secondary">Secondary</option>
+                                <option value="tertiary">Tertiary</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Contact Email</label>
+                            <input type="email" class="form-control" id="schoolEmail">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Contact Phone</label>
+                            <input type="tel" class="form-control" id="schoolPhone">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-control" id="schoolAddress" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">School Logo</label>
+                        <input type="file" class="form-control" id="schoolLogo" accept="image/*">
+                        <div class="form-text">Upload school logo (PNG, JPG, max 2MB)</div>
+                    </div>
+
+                    <!-- Hierarchy Configuration -->
+                    <div id="hierarchySection" style="display: none;">
+                        <h6 class="mt-4 mb-3">Staff Hierarchy Configuration</h6>
+                        <div id="hierarchyFields">
+                            <!-- Dynamic hierarchy fields will be added here -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveSchool()">Save School</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit School Modal -->
+<div class="modal fade" id="editSchoolModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edit School</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editSchoolForm">
+                    <input type="hidden" id="editSchoolId">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">School Name *</label>
+                            <input type="text" class="form-control" id="editSchoolName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Institution Type *</label>
+                            <select class="form-select" id="editInstitutionType" required disabled>
+                                <option value="university">University</option>
+                                <option value="college">College</option>
+                                <option value="vocational">Vocational Center</option>
+                                <option value="senior_school">Senior School</option>
+                                <option value="junior_school">Junior School</option>
+                            </select>
+                            <div class="form-text">Institution type cannot be changed</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Location *</label>
+                            <input type="text" class="form-control" id="editSchoolLocation" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Level</label>
+                            <select class="form-select" id="editSchoolLevel">
+                                <option value="">Select Level</option>
+                                <option value="primary">Primary</option>
+                                <option value="secondary">Secondary</option>
+                                <option value="tertiary">Tertiary</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Contact Email</label>
+                            <input type="email" class="form-control" id="editSchoolEmail">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Contact Phone</label>
+                            <input type="tel" class="form-control" id="editSchoolPhone">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-control" id="editSchoolAddress" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">School Logo</label>
+                        <input type="file" class="form-control" id="editSchoolLogo" accept="image/*">
+                        <div class="form-text">Upload new logo to replace existing one</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="updateSchool()">Update School</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user-plus me-2"></i>Add Staff Member</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addStaffForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name *</label>
+                            <input type="text" class="form-control" id="staffFirstName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name *</label>
+                            <input type="text" class="form-control" id="staffLastName" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control" id="staffEmail" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="staffPhone">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">School *</label>
+                            <select class="form-select" id="staffSchool" required onchange="updatePositionOptions()">
+                                <option value="">Select School</option>
+                                <!-- Schools will be populated here -->
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Position/Title *</label>
+                            <select class="form-select" id="staffPosition" required>
+                                <option value="">Select Position</option>
+                                <!-- Positions will be populated based on school type -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Department</label>
+                            <input type="text" class="form-control" id="staffDepartment">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Qualification</label>
+                            <input type="text" class="form-control" id="staffQualification">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Employment Date</label>
+                            <input type="date" class="form-control" id="staffEmploymentDate">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" id="staffStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="suspended">Suspended</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="staffPhoto" accept="image/*">
+                        <div class="form-text">Upload profile picture (PNG, JPG, max 2MB)</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveStaff()">Save Staff</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bulk Import Modal -->
+<div class="modal fade" id="bulkImportModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-upload me-2"></i>Bulk Import Schools</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Upload a CSV file with school data. Download the template below for the correct format.
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">CSV File *</label>
+                    <input type="file" class="form-control" id="bulkImportFile" accept=".csv" required>
+                </div>
+
+                <div class="mb-3">
+                    <a href="#" class="btn btn-outline-primary btn-sm" onclick="downloadTemplate()">
+                        <i class="fas fa-download me-1"></i>Download CSV Template
+                    </a>
+                </div>
+
+                <div class="mb-3">
+                    <h6>CSV Format Requirements:</h6>
+                    <ul class="small">
+                        <li>Columns: name, institution_type, location, level, email, phone, address</li>
+                        <li>Institution types: university, college, vocational, senior_school, junior_school</li>
+                        <li>Levels: primary, secondary, tertiary</li>
+                        <li>All fields except email, phone, address are required</li>
+                    </ul>
+                </div>
+
+                <div id="importProgress" style="display: none;">
+                    <div class="progress mb-2">
+                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <div id="importStatus">Processing...</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="processBulkImport()">Import Schools</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Details Modal -->
+<div class="modal fade" id="performanceModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-chart-line me-2"></i>Performance Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="performanceDetails">
+                    <!-- Performance details will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="exportPerformanceReport()">Export Report</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Modal functions
+function updateHierarchyOptions() {
+    const institutionType = document.getElementById('institutionType').value;
+    const hierarchySection = document.getElementById('hierarchySection');
+    const hierarchyFields = document.getElementById('hierarchyFields');
+
+    if (!institutionType) {
+        hierarchySection.style.display = 'none';
+        return;
+    }
+
+    hierarchySection.style.display = 'block';
+    hierarchyFields.innerHTML = '';
+
+    const hierarchies = {
+        university: [
+            { position: 'Vice Chancellor', level: 1 },
+            { position: 'Deputy Vice Chancellor', level: 2 },
+            { position: 'Registrar', level: 3 },
+            { position: 'Dean', level: 4 },
+            { position: 'Head of Department', level: 5 },
+            { position: 'Senior Lecturer', level: 6 },
+            { position: 'Lecturer', level: 7 },
+            { position: 'Assistant Lecturer', level: 8 }
+        ],
+        college: [
+            { position: 'Principal', level: 1 },
+            { position: 'Vice Principal', level: 2 },
+            { position: 'Dean', level: 3 },
+            { position: 'Head of Department', level: 4 },
+            { position: 'Senior Lecturer', level: 5 },
+            { position: 'Lecturer', level: 6 }
+        ],
+        vocational: [
+            { position: 'Director', level: 1 },
+            { position: 'Deputy Director', level: 2 },
+            { position: 'Head of Department', level: 3 },
+            { position: 'Senior Instructor', level: 4 },
+            { position: 'Instructor', level: 5 }
+        ],
+        senior_school: [
+            { position: 'Principal', level: 1 },
+            { position: 'Vice Principal', level: 2 },
+            { position: 'Head of Department', level: 3 },
+            { position: 'Senior Teacher', level: 4 },
+            { position: 'Teacher', level: 5 }
+        ],
+        junior_school: [
+            { position: 'Head Teacher', level: 1 },
+            { position: 'Deputy Head Teacher', level: 2 },
+            { position: 'Senior Teacher', level: 3 },
+            { position: 'Teacher', level: 4 }
+        ]
+    };
+
+    const positions = hierarchies[institutionType] || [];
+    positions.forEach(pos => {
+        const field = document.createElement('div');
+        field.className = 'mb-3';
+        field.innerHTML = `
+            <label class="form-label">${pos.position} Count</label>
+            <input type="number" class="form-control hierarchy-count" data-position="${pos.position}" data-level="${pos.level}" min="0" value="0">
+        `;
+        hierarchyFields.appendChild(field);
+    });
+}
+
+function updatePositionOptions() {
+    const schoolId = document.getElementById('staffSchool').value;
+    const positionSelect = document.getElementById('staffPosition');
+
+    if (!schoolId) {
+        positionSelect.innerHTML = '<option value="">Select School First</option>';
+        return;
+    }
+
+    // This would fetch positions based on school type from the API
+    // For now, we'll use placeholder positions
+    const positions = [
+        'Principal', 'Vice Principal', 'Head of Department', 'Senior Teacher',
+        'Teacher', 'Assistant Teacher', 'Administrative Staff'
+    ];
+
+    positionSelect.innerHTML = '<option value="">Select Position</option>';
+    positions.forEach(pos => {
+        const option = document.createElement('option');
+        option.value = pos.toLowerCase().replace(/\s+/g, '_');
+        option.textContent = pos;
+        positionSelect.appendChild(option);
+    });
+}
+
+async function saveSchool() {
+    const form = document.getElementById('addSchoolForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    const schoolData = {
+        name: document.getElementById('schoolName').value,
+        institution_type: document.getElementById('institutionType').value,
+        location: document.getElementById('schoolLocation').value,
+        level: document.getElementById('schoolLevel').value,
+        email: document.getElementById('schoolEmail').value,
+        phone: document.getElementById('schoolPhone').value,
+        address: document.getElementById('schoolAddress').value
+    };
+
+    // Collect hierarchy data
+    const hierarchyCounts = {};
+    document.querySelectorAll('.hierarchy-count').forEach(input => {
+        const position = input.dataset.position;
+        const count = parseInt(input.value) || 0;
+        if (count > 0) {
+            hierarchyCounts[position] = count;
+        }
+    });
+    schoolData.hierarchy_counts = hierarchyCounts;
+
+    try {
+        const response = await fetch('/api/admin/schools', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(schoolData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showAlert('School added successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('addSchoolModal')).hide();
+            form.reset();
+            loadSchoolsData();
+        } else {
+            showAlert('Error adding school: ' + result.message, 'danger');
+        }
+    } catch (error) {
+        console.error('Error saving school:', error);
+        showAlert('Error saving school', 'danger');
+    }
+}
+
+async function saveStaff() {
+    const form = document.getElementById('addStaffForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    const staffData = {
+        first_name: document.getElementById('staffFirstName').value,
+        last_name: document.getElementById('staffLastName').value,
+        email: document.getElementById('staffEmail').value,
+        phone: document.getElementById('staffPhone').value,
+        school_id: document.getElementById('staffSchool').value,
+        position: document.getElementById('staffPosition').value,
+        department: document.getElementById('staffDepartment').value,
+        qualification: document.getElementById('staffQualification').value,
+        employment_date: document.getElementById('staffEmploymentDate').value,
+        status: document.getElementById('staffStatus').value || 'active'
+    };
+
+    try {
+        const response = await fetch('/api/admin/staff', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(staffData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showAlert('Staff member added successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('addStaffModal')).hide();
+            form.reset();
+            loadStaffData();
+        } else {
+            showAlert('Error adding staff: ' + result.message, 'danger');
+        }
+    } catch (error) {
+        console.error('Error saving staff:', error);
+        showAlert('Error saving staff', 'danger');
+    }
+}
+
+function downloadTemplate() {
+    const csvContent = `name,institution_type,location,level,email,phone,address
+Example University,university,Nairobi,tertiary,info@example.edu,+254700000000,123 University Road
+Example College,college,Nairobi,tertiary,info@college.edu,+254711111111,456 College Avenue
+Example Vocational Center,vocational,Nairobi,secondary,info@vocational.edu,+254722222222,789 Vocational Street
+Example Senior School,senior_school,Nairobi,secondary,info@senior.edu,+254733333333,321 Senior Road
+Example Junior School,junior_school,Nairobi,primary,info@junior.edu,+254744444444,654 Junior Lane`;
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'schools_import_template.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+async function processBulkImport() {
+    const fileInput = document.getElementById('bulkImportFile');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        showAlert('Please select a CSV file', 'warning');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const progressDiv = document.getElementById('importProgress');
+    const statusDiv = document.getElementById('importStatus');
+    progressDiv.style.display = 'block';
+    statusDiv.textContent = 'Uploading file...';
+
+    try {
+        const response = await fetch('/api/admin/schools/bulk-import', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            statusDiv.textContent = `Import completed! ${result.data.imported} schools imported, ${result.data.errors} errors.`;
+            showAlert('Bulk import completed successfully!', 'success');
+            loadSchoolsData();
+        } else {
+            statusDiv.textContent = 'Import failed: ' + result.message;
+            showAlert('Bulk import failed', 'danger');
+        }
+    } catch (error) {
+        console.error('Error during bulk import:', error);
+        statusDiv.textContent = 'Import failed due to network error';
+        showAlert('Bulk import failed', 'danger');
+    }
+}
+
+// Enhanced modal functions
+function showAddSchoolModal() {
+    const modal = new bootstrap.Modal(document.getElementById('addSchoolModal'));
+    modal.show();
+}
+
+function showBulkImportModal() {
+    const modal = new bootstrap.Modal(document.getElementById('bulkImportModal'));
+    modal.show();
+}
+
+function showAddStaffModal() {
+    // Load schools for the dropdown
+    loadSchoolsForDropdown();
+    const modal = new bootstrap.Modal(document.getElementById('addStaffModal'));
+    modal.show();
+}
+
+async function loadSchoolsForDropdown() {
+    try {
+        const response = await fetch('/api/admin/schools?limit=1000');
+        const data = await response.json();
+
+        if (data.success) {
+            const select = document.getElementById('staffSchool');
+            select.innerHTML = '<option value="">Select School</option>';
+
+            data.data.forEach(school => {
+                const option = document.createElement('option');
+                option.value = school.school_id;
+                option.textContent = school.name;
+                select.appendChild(option);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading schools for dropdown:', error);
+    }
+}
+
+async function editSchool(schoolId) {
+    try {
+        const response = await fetch(`/api/admin/schools/${schoolId}`);
+        const data = await response.json();
+
+        if (data.success) {
+            const school = data.data;
+            document.getElementById('editSchoolId').value = school.school_id;
+            document.getElementById('editSchoolName').value = school.name || '';
+            document.getElementById('editInstitutionType').value = school.institution_type || '';
+            document.getElementById('editSchoolLocation').value = school.location || '';
+            document.getElementById('editSchoolLevel').value = school.level || '';
+            document.getElementById('editSchoolEmail').value = school.email || '';
+            document.getElementById('editSchoolPhone').value = school.phone || '';
+            document.getElementById('editSchoolAddress').value = school.address || '';
+
+            const modal = new bootstrap.Modal(document.getElementById('editSchoolModal'));
+            modal.show();
+        }
+    } catch (error) {
+        console.error('Error loading school for edit:', error);
+        showAlert('Error loading school details', 'danger');
+    }
+}
+
+async function updateSchool() {
+    const form = document.getElementById('editSchoolForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    const schoolId = document.getElementById('editSchoolId').value;
+    const schoolData = {
+        name: document.getElementById('editSchoolName').value,
+        location: document.getElementById('editSchoolLocation').value,
+        level: document.getElementById('editSchoolLevel').value,
+        email: document.getElementById('editSchoolEmail').value,
+        phone: document.getElementById('editSchoolPhone').value,
+        address: document.getElementById('editSchoolAddress').value
+    };
+
+    try {
+        const response = await fetch(`/api/admin/schools/${schoolId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(schoolData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showAlert('School updated successfully!', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('editSchoolModal')).hide();
+            loadSchoolsData();
+        } else {
+            showAlert('Error updating school: ' + result.message, 'danger');
+        }
+    } catch (error) {
+        console.error('Error updating school:', error);
+        showAlert('Error updating school', 'danger');
+    }
+}
+
+async function viewSchool(schoolId) {
+    // This would open a detailed view modal
+    showAlert(`Viewing detailed information for school ${schoolId}`, 'info');
+}
+
+async function calculatePerformance(schoolId) {
+    try {
+        const response = await fetch(`/api/admin/performance/calculate/${schoolId}`, {
+            method: 'POST'
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showAlert('Performance calculated successfully!', 'success');
+            loadSchoolsData(); // Refresh the table to show updated performance
+        } else {
+            showAlert('Error calculating performance: ' + result.message, 'danger');
+        }
+    } catch (error) {
+        console.error('Error calculating performance:', error);
+        showAlert('Error calculating performance', 'danger');
+    }
+}
+
+async function viewPerformanceDetails(schoolId) {
+    try {
+        const response = await fetch(`/api/admin/performance/${schoolId}`);
+        const data = await response.json();
+
+        if (data.success) {
+            const modal = new bootstrap.Modal(document.getElementById('performanceModal'));
+            const detailsDiv = document.getElementById('performanceDetails');
+
+            detailsDiv.innerHTML = `
+                <h6>${data.data.school_name}</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Overall Score:</strong> ${Math.round(data.data.overall_score)}%</p>
+                        <p><strong>Academic Score:</strong> ${Math.round(data.data.academic_score)}%</p>
+                        <p><strong>Teacher Score:</strong> ${Math.round(data.data.teacher_score)}%</p>
+                        <p><strong>Period:</strong> ${data.data.period}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Deviation:</strong> ${data.data.deviation ? Math.round(data.data.deviation * 100) / 100 : 'N/A'}</p>
+                        <p><strong>Status:</strong> <span class="badge bg-${data.data.status === 'excellent' ? 'success' : data.data.status === 'good' ? 'primary' : data.data.status === 'average' ? 'warning' : 'danger'}">${data.data.status}</span></p>
+                        <p><strong>Last Updated:</strong> ${new Date(data.data.created_at).toLocaleDateString()}</p>
+                    </div>
+                </div>
+                ${data.data.alert_reason ? `<div class="alert alert-warning"><strong>Alert:</strong> ${data.data.alert_reason}</div>` : ''}
+            `;
+
+            modal.show();
+        }
+    } catch (error) {
+        console.error('Error loading performance details:', error);
+        showAlert('Error loading performance details', 'danger');
+    }
+}
+
+function exportPerformanceReport() {
+    showAlert('Export functionality would be implemented here', 'info');
+}
+</script>

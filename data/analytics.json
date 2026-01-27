@@ -1,0 +1,60 @@
+{
+  "totalSchools": 8,
+  "byType": {
+    "private": 4,
+    "public": 4
+  },
+  "byGrade": {
+    "ECDE": 1,
+    "Primary": 2,
+    "Secondary": 3,
+    "University": 1
+  },
+  "averageMonthlyFee": {
+    "overall": 10812.5,
+    "private": 15750,
+    "public": 3625
+  },
+  "topSchoolsByScore": [
+    {
+      "name": "Heritage International",
+      "score": 92,
+      "type": "private"
+    },
+    {
+      "name": "Lakewood Girls Academy",
+      "score": 89,
+      "type": "private"
+    },
+    {
+      "name": "St. Mary's Academy",
+      "score": 84,
+      "type": "private"
+    }
+  ],
+  "streamDistribution": {
+    "Coed": 6,
+    "Girls": 1,
+    "Boys": 1
+  },
+  "vacancyStats": {
+    "totalVacancies": 5,
+    "openVacancies": 4,
+    "closedVacancies": 1,
+    "averageVacancyRate": 32
+  },
+  "uploadStats": {
+    "totalUploads": 5,
+    "approved": 3,
+    "pending": 2,
+    "rejected": 0
+  },
+  "paymentStats": {
+    "totalPayments": 5,
+    "totalAmount": 5000,
+    "averagePayment": 1000,
+    "completedPayments": 4,
+    "pendingPayments": 1
+  },
+  "lastUpdated": "2025-01-21T10:00:00Z"
+}

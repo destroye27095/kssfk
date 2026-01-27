@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSFP - Link Accounts</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/buttons.css">
+    <style>
+        .account-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .account-item.connected {
+            background-color: #f0f7ff;
+            border-color: #007bff;
+        }
+
+        .account-item.connected .badge {
+            background-color: #28a745;
+        }
+
+        .account-status {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .account-info h5 {
+            margin-bottom: 5px;
+        }
+
+        .account-info p {
+            margin: 0;
+            font-size: 14px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Header -->
+            <div class="auth-header">
+                <h1 class="auth-title">
+                    <i class="fas fa-graduation-cap"></i> KSFP
+                </h1>
+                <p class="auth-subtitle">Kenya School Fee Platform</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="auth-content">
+                <h2 class="mb-3">Link Your Accounts</h2>
+                <p class="text-muted mb-4">Connect multiple login methods to one KSFP account for easier access</p>
+
+                <!-- Status Messages -->
+                <div id="statusAlert" class="alert alert-info d-none" role="alert">
+                    <i class="fas fa-info-circle"></i> <span id="statusMessage"></span>
+                </div>
+
+                <!-- Google Account -->
+                <div class="account-item" id="googleAccount">
+                    <div class="account-info">
+                        <h5><i class="fab fa-google"></i> Google Account</h5>
+                        <p id="googleEmail">Not connected</p>
+                    </div>
+                    <div class="account-status">
+                        <span id="googleStatus" class="badge bg-secondary">Not Connected</span>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="linkGoogleBtn">Link</button>
+                    </div>
+                </div>
+
+                <!-- Facebook Account -->
+                <div class="account-item" id="facebookAccount">
+                    <div class="account-info">
+                        <h5><i class="fab fa-facebook-f"></i> Facebook Account</h5>
+                        <p id="facebookName">Not connected</p>
+                    </div>
+                    <div class="account-status">
+                        <span id="facebookStatus" class="badge bg-secondary">Not Connected</span>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="linkFacebookBtn">Link</button>
+                    </div>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="account-item">
+                    <div class="account-info">
+                        <h5><i class="fas fa-mobile-alt"></i> Phone Number</h5>
+                        <p id="phoneDisplay">Not verified</p>
+                    </div>
+                    <div class="account-status">
+                        <span id="phoneStatus" class="badge bg-success">Primary</span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Primary</button>
+                    </div>
+                </div>
+
+                <!-- Security Info -->
+                <div class="alert alert-info mt-4" role="alert">
+                    <h6><i class="fas fa-shield-alt"></i> Security Notice</h6>
+                    <ul class="mb-0">
+                        <li>Linking accounts improves security</li>
+                        <li>All accounts map to your phone number for verification</li>
+                        <li>Phone number is required for payments</li>
+                        <li>You can unlink accounts anytime</li>
+                    </ul>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-4">
+                    <button type="button" class="btn btn-primary w-100 mb-2" id="saveChangesBtn">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <a href="/dashboard" class="btn btn-secondary w-100">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Facebook SDK -->
+    <script async defer crossorigin="anonymous" 
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" 
+        nonce="FACEBOOK_NONCE"></script>
+
+    <!-- Auth Scripts -->
+    <script src="../js/auth/session-manager.js"></script>
+    <script src="../js/auth/google-auth.js"></script>
+    <script src="../js/auth/facebook-auth.js"></script>
+
+    <script>
+        // Check if user is logged in
+        if (!SessionManager.isLoggedIn()) {
+            window.location.href = '/auth/login.html';
+        }
+
+        const user = SessionManager.getUser();
+
+        // Display current user info
+        function loadAccountStatus() {
+            if (user.google_id) {
+                document.getElementById('googleEmail').textContent = user.email || 'Connected';
+                document.getElementById('googleStatus').textContent = 'Connected';
+                document.getElementById('googleStatus').className = 'badge bg-success';
+                document.getElementById('linkGoogleBtn').textContent = 'Unlink';
+                document.getElementById('googleAccount').classList.add('connected');
+            }
+
+            if (user.facebook_id) {
+                document.getElementById('facebookName').textContent = user.full_name;
+                document.getElementById('facebookStatus').textContent = 'Connected';
+                document.getElementById('facebookStatus').className = 'badge bg-success';
+                document.getElementById('linkFacebookBtn').textContent = 'Unlink';
+                document.getElementById('facebookAccount').classList.add('connected');
+            }
+
+            if (user.phone_number) {
+                document.getElementById('phoneDisplay').textContent = user.phone_number;
+            }
+        }
+
+        // Link/Unlink Google
+        document.getElementById('linkGoogleBtn').addEventListener('click', function() {
+            if (user.google_id) {
+                unlinkAccount('google');
+            } else {
+                linkWithGoogle();
+            }
+        });
+
+        // Link/Unlink Facebook
+        document.getElementById('linkFacebookBtn').addEventListener('click', function() {
+            if (user.facebook_id) {
+                unlinkAccount('facebook');
+            } else {
+                linkWithFacebook();
+            }
+        });
+
+        // Link with Google
+        function linkWithGoogle() {
+            // Implementation would use GoogleAuth.link()
+            showAlert('info', 'Redirecting to Google...');
+        }
+
+        // Link with Facebook
+        function linkWithFacebook() {
+            // Implementation would use FacebookAuth.link()
+            showAlert('info', 'Redirecting to Facebook...');
+        }
+
+        // Unlink Account
+        async function unlinkAccount(provider) {
+            if (!confirm(`Are you sure you want to unlink your ${provider} account?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/auth/unlink/${provider}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${SessionManager.getToken()}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('success', `${provider} account unlinked`);
+                    user[`${provider}_id`] = null;
+                    loadAccountStatus();
+                } else {
+                    showAlert('error', data.message || 'Failed to unlink account');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error. Please try again.');
+            }
+        }
+
+        // Save Changes
+        document.getElementById('saveChangesBtn').addEventListener('click', async function() {
+            try {
+                const response = await fetch('/api/auth/account/update', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${SessionManager.getToken()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('success', 'Account settings saved successfully');
+                    SessionManager.setUser(data.user);
+                } else {
+                    showAlert('error', data.message || 'Failed to save settings');
+                }
+            } catch (error) {
+                showAlert('error', 'Network error. Please try again.');
+            }
+        });
+
+        function showAlert(type, message) {
+            const alert = document.getElementById('statusAlert');
+            const messageEl = document.getElementById('statusMessage');
+            alert.className = `alert alert-${type === 'error' ? 'danger' : type === 'info' ? 'info' : 'success'}`;
+            messageEl.textContent = message;
+            alert.classList.remove('d-none');
+        }
+
+        // Initialize
+        loadAccountStatus();
+    </script>
+</body>
+</html>
