@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSFP - Kenya School Fee Platform</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --kenya-green: #009639;
+            --kenya-red: #bb0000;
+            --kenya-black: #000000;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(0, 150, 57, 0.9), rgba(187, 0, 0, 0.9)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text fill="white" font-size="20" y="50%">🇰🇪</text></svg>');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .login-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .login-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .login-card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .login-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 150, 57, 0.3);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 150, 57, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .features-section {
+            background: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--kenya-green);
+            margin-bottom: 1rem;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, var(--kenya-black), #333);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--kenya-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        .shape:nth-child(4) {
+            width: 70px;
+            height: 70px;
+            bottom: 10%;
+            right: 20%;
+            animation-delay: 1s;
+        }
+
+        .shape:nth-child(5) {
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            left: 5%;
+            animation-delay: 3s;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .shape:nth-child(6) {
+            width: 90px;
+            height: 90px;
+            top: 70%;
+            right: 5%;
+            animation-delay: 5s;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .shape:nth-child(7) {
+            width: 40px;
+            height: 40px;
+            top: 30%;
+            left: 50%;
+            animation-delay: 1.5s;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .shape:nth-child(8) {
+            width: 120px;
+            height: 120px;
+            bottom: 40%;
+            right: 40%;
+            animation-delay: 4.5s;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* Advanced Animations */
+        .hero-title span {
+            display: inline-block;
+            animation: letterFloat 2s ease-out infinite;
+        }
+
+        .hero-title span:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        .hero-title span:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .login-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--kenya-green), var(--kenya-red));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .stat-number {
+            position: relative;
+            display: inline-block;
+        }
+
+        .stat-number::after {
+            content: '+';
+            position: absolute;
+            right: -15px;
+            top: 0;
+            color: var(--kenya-green);
+            font-weight: 700;
+        }
+
+        /* Particle Effect */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: particleFloat 8s linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 6s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 7s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 0.5s; }
+        .particle:nth-child(10) { left: 15%; animation-delay: 1.5s; }
+
+        /* Interactive Elements */
+        .interactive-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                        rgba(255,255,255,0.1) 0%,
+                        transparent 50%);
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-25px) rotate(270deg);
+            }
+        }
+
+        @keyframes letterFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Enhanced hover effects */
+        .btn-login {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Loading animation for cards */
+        .login-card {
+            animation: bounceIn 1s ease-out;
+        }
+
+        .login-card:nth-child(1) { animation-delay: 1.6s; }
+        .login-card:nth-child(2) { animation-delay: 1.8s; }
+        .login-card:nth-child(3) { animation-delay: 2s; }
+
+        .feature-card {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .feature-card:nth-child(even) {
+            animation: slideInRight 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent position-absolute w-100" style="z-index: 10;">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-graduation-cap me-2"></i>
+                KSFP
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
+        <div class="interactive-bg"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span>K</span><span>e</span><span>n</span><span>y</span><span>a</span>
+                <span>S</span><span>c</span><span>h</span><span>o</span><span>o</span><span>l</span>
+                <span>F</span><span>e</span><span>e</span>
+                <span>P</span><span>l</span><span>a</span><span>t</span><span>f</span><span>o</span><span>r</span><span>m</span>
+            </h1>
+            <p class="hero-subtitle">
+                Empowering Education Through Transparent Fee Management.<br>
+                Connecting Schools, Parents, and Communities Nationwide.
+            </p>
+
+            <!-- Login Options -->
+            <div class="login-cards">
+                <div class="login-card">
+                    <div class="login-card-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h3>School Portal</h3>
+                    <p>Manage your school's fee structure, student records, and financial reports. Access administrative tools and analytics.</p>
+                    <a href="school-login.html" class="btn-login">
+                        <i class="fas fa-sign-in-alt me-2"></i>School Login
+                    </a>
+                </div>
+
+                <div class="login-card">
+                    <div class="login-card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Parent & Community Portal</h3>
+                    <p>Find schools, compare fees, make payments, and access educational resources. Perfect for cybercafes too.</p>
+                    <a href="index.html" class="btn-login">
+                        <i class="fas fa-search me-2"></i>Browse Schools
+                    </a>
+                </div>
+
+                <div class="login-card">
+                    <div class="login-card-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Admin Dashboard</h3>
+                    <p>Comprehensive administrative control over the entire platform. Manage schools, monitor performance, and generate reports.</p>
+                    <a href="admin-login.html" class="btn-login">
+                        <i class="fas fa-user-shield me-2"></i>Admin Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: var(--dark-color); font-weight: 600;">
+                Platform Features
+            </h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h4>Transparent Fee Management</h4>
+                    <p>Clear fee structures based on government guidelines. CBC Senior Schools: KSh 52,600/term, Free education in ASAL areas.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h4>Location Intelligence</h4>
+                    <p>Advanced mapping system showing school locations, transport accessibility, and environmental factors.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>Smart Ratings</h4>
+                    <p>AI-powered school ratings based on academic performance, infrastructure, facilities, and community feedback.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Mobile Payments</h4>
+                    <p>Secure payment processing with M-Pesa, Airtel Money, and card payments. Real-time transaction confirmations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Performance Analytics</h4>
+                    <p>Comprehensive analytics for schools and administrators. Track enrollment, fees collection, and academic trends.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Secure & Compliant</h4>
+                    <p>Bank-grade security with ACID transactions, immutable audit trails, and full compliance with Kenyan education laws.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="mb-5">Platform Impact</h2>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number pulse">15,000+</div>
+                    <p>Schools Registered</p>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-number pulse">2M+</div>
+                    <p>Students Served</p>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-number pulse">KSh 50B+</div>
+                    <p>Fees Processed</p>
+                </div>
+
+                <div class="stat-item">
+                    <div class="stat-number pulse">47</div>
+                    <p>Counties Covered</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>KSFP</h5>
+                    <p>Kenya School Fee Platform - Making education accessible and transparent for all Kenyan families.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Find Schools</a></li>
+                        <li><a href="#" class="text-light">Fee Guidelines</a></li>
+                        <li><a href="#" class="text-light">Payment Portal</a></li>
+                        <li><a href="#" class="text-light">School Registration</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <p>
+                        <i class="fas fa-envelope me-2"></i>noreply@kssfk.com<br>
+                        <i class="fas fa-phone me-2"></i>+254 768 331 888<br>
+                        <i class="fas fa-map-marker-alt me-2"></i>Nairobi, Kenya
+                    </p>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="text-center">
+                <p>&copy; 2026 Kenya School Fee Platform. Developed by Wamoto Raphael. All rights reserved.</p>
+                <p class="mb-0">
+                    <small>Empowering Education Through Technology 🇰🇪</small>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Dynamic stats counter
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 20);
+        }
+
+        // Animate stats on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                animateCounter(document.querySelector('.stat-number'), 15000);
+                setTimeout(() => animateCounter(document.querySelectorAll('.stat-number')[1], 2000000), 200);
+                setTimeout(() => animateCounter(document.querySelectorAll('.stat-number')[2], 50000000000), 400);
+                setTimeout(() => animateCounter(document.querySelectorAll('.stat-number')[3], 47), 600);
+            }, 1000);
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+
+        // Interactive mouse tracking for background effect
+        document.addEventListener('mousemove', (e) => {
+            const heroSection = document.querySelector('.hero-section');
+            const rect = heroSection.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+            heroSection.style.setProperty('--mouse-x', x + '%');
+            heroSection.style.setProperty('--mouse-y', y + '%');
+        });
+
+        // Add parallax effect to floating shapes
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.shape');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed * 20;
+                const y = (mouseY - 0.5) * speed * 20;
+                shape.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Add click ripple effect
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.style.position = 'fixed';
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            ripple.style.width = '0px';
+            ripple.style.height = '0px';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.zIndex = '9999';
+            ripple.style.animation = 'ripple 0.6s linear';
+
+            document.body.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    width: 200px;
+                    height: 200px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Enhanced scroll animations
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+
+                // Parallax effect for hero section
+                const hero = document.querySelector('.hero-section');
+                if (hero) {
+                    hero.style.transform = `translateY(${rate}px)`;
+                }
+            }, 10);
+        });
+    </script>
+
+</body>
+</html>

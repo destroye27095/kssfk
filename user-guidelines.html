@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guidelines - KSFP</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --kenya-green: #009639;
+            --kenya-red: #bb0000;
+            --kenya-black: #000000;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="header-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23header-pattern)"/></svg>');
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .guidelines-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-tabs {
+            border: none;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 10px;
+            margin: 0 0.5rem;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,150,57,0.3);
+        }
+
+        .nav-tabs .nav-link:hover:not(.active) {
+            background: rgba(0,150,57,0.1);
+            color: var(--kenya-green);
+        }
+
+        .guideline-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--kenya-green);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            font-size: 2rem;
+            color: var(--kenya-green);
+            margin-right: 1rem;
+            width: 60px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-description {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .steps-container {
+            margin-top: 2rem;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,150,57,0.3);
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .step-screenshot {
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            color: #6c757d;
+            margin-top: 1rem;
+        }
+
+        .step-screenshot i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .important-note {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .important-note .note-icon {
+            color: #856404;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .important-note h6 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .important-note p {
+            margin-bottom: 0;
+            color: #856404;
+        }
+
+        .faq-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e9ecef;
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-question i {
+            margin-right: 0.5rem;
+            color: var(--kenya-green);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            color: #666;
+            line-height: 1.6;
+            margin-left: 1.5rem;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, var(--dark-color), #495057);
+            color: white;
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .contact-section p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--kenya-green);
+        }
+
+        .contact-item h5 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .contact-item p {
+            margin-bottom: 0;
+            opacity: 0.9;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,150,57,0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,150,57,0.4);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-tabs .nav-link {
+                padding: 0.75rem 1rem;
+                margin: 0 0.25rem;
+                font-size: 0.9rem;
+            }
+
+            .step {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-number {
+                margin-bottom: 1rem;
+                margin-right: 0;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1><i class="fas fa-book-open me-3"></i>User Guidelines</h1>
+            <p>Complete step-by-step guide for KSFP platform users</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Navigation Tabs -->
+        <div class="guidelines-nav">
+            <ul class="nav nav-tabs" id="guidelinesTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="schools-tab" data-bs-toggle="tab" data-bs-target="#schools" type="button" role="tab">
+                        <i class="fas fa-school me-2"></i>For Schools
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="parents-tab" data-bs-toggle="tab" data-bs-target="#parents" type="button" role="tab">
+                        <i class="fas fa-users me-2"></i>For Parents
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="admins-tab" data-bs-toggle="tab" data-bs-target="#admins" type="button" role="tab">
+                        <i class="fas fa-cog me-2"></i>For Admins
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq" type="button" role="tab">
+                        <i class="fas fa-question-circle me-2"></i>FAQ
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="guidelinesTabsContent">
+                <!-- Schools Tab -->
+                <div class="tab-pane fade show active" id="schools" role="tabpanel">
+                    <div class="guideline-section animate-on-scroll">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <div>
+                                <h3 class="section-title">School Registration & Setup</h3>
+                                <p class="section-description">Complete guide for schools to register and configure their accounts</p>
+                            </div>
+                        </div>
+
+                        <div class="steps-container">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Access School Login Portal</h4>
+                                    <p class="step-description">Navigate to the KSFP platform and click on "School Login" from the main landing page. This will take you to the dedicated school authentication portal.</p>
+                                    <div class="step-screenshot">
+                                        <i class="fas fa-desktop"></i>
+                                        <p>School Login Portal Screenshot</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Register Your School</h4>
+                                    <p class="step-description">If your school is not yet registered, click "Register New School". Provide your school's official details including name, location, registration number, and contact information. Upload required documents for verification.</p>
+                                    <div class="important-note">
+                                        <div class="note-icon">
+                                            <i class="fas fa-info-circle"></i>
+                                        </div>
+                                        <h6>Important</h6>
+                                        <p>Ensure all information matches your official school registration documents. Incorrect information may delay approval.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Verify School Details</h4>
+                                    <p class="step-description">After registration, your school will undergo verification by KSFP administrators. This process typically takes 24-48 hours. You'll receive email notifications about the status.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Set Up Fee Structure</h4>
+                                    <p class="step-description">Once verified, log in to your school dashboard. The system will automatically assign the correct fee structure based on your school type and location (CBC Senior Schools: KSh 52,600/term, constituency rates apply).</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Configure Payment Methods</h4>
+                                    <p class="step-description">Set up your preferred payment collection methods including M-Pesa, bank transfers, and cash payments. Configure payment notifications and receipts.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">6</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Manage Student Records</h4>
+                                    <p class="step-description">Add student information, assign classes, and set up fee payment schedules. The system will automatically generate invoices and track payment status.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guideline-section animate-on-scroll">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div>
+                                <h3 class="section-title">Fee Collection & Management</h3>
+                                <p class="section-description">How to collect and manage school fees effectively</p>
+                            </div>
+                        </div>
+
+                        <div class="steps-container">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Generate Fee Invoices</h4>
+                                    <p class="step-description">Use the dashboard to generate fee invoices for individual students or entire classes. Invoices include QR codes for easy mobile payment.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Accept Payments</h4>
+                                    <p class="step-description">Accept payments through multiple channels: M-Pesa, bank transfers, card payments, and cash. The system automatically updates payment status and sends receipts.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Track Payment History</h4>
+                                    <p class="step-description">Monitor all payments, outstanding balances, and generate detailed financial reports for your school administration.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parents Tab -->
+                <div class="tab-pane fade" id="parents" role="tabpanel">
+                    <div class="guideline-section animate-on-scroll">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h3 class="section-title">Parent Registration & Access</h3>
+                                <p class="section-description">How parents can register and access their children's fee information</p>
+                            </div>
+                        </div>
+
+                        <div class="steps-container">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Access Parent Portal</h4>
+                                    <p class="step-description">Visit the KSFP platform and click "Parent/Cybercafe Login". This portal is designed for parents and cybercafe operators to access fee information.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Register as Parent</h4>
+                                    <p class="step-description">Create an account using your phone number or email. Provide your details and link your children to their respective schools.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Link Student Accounts</h4>
+                                    <p class="step-description">Add your children's admission numbers or use the school's registration code to link their accounts to your parent dashboard.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">View Fee Information</h4>
+                                    <p class="step-description">Access detailed fee breakdowns, payment history, outstanding balances, and upcoming payment deadlines for each child.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Make Payments</h4>
+                                    <p class="step-description">Pay school fees securely using M-Pesa, card payments, or bank transfers. Receive instant confirmation and receipts.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guideline-section animate-on-scroll">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div>
+                                <h3 class="section-title">Mobile Payment Guide</h3>
+                                <p class="section-description">Step-by-step guide for mobile money payments</p>
+                            </div>
+                        </div>
+
+                        <div class="steps-container">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Select Payment Method</h4>
+                                    <p class="step-description">Choose M-Pesa as your payment method from the payment options in your parent dashboard.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Enter Payment Details</h4>
+                                    <p class="step-description">Enter the exact amount shown on the invoice. The system will display the school's M-Pesa paybill number.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Complete M-Pesa Transaction</h4>
+                                    <p class="step-description">On your phone, go to M-Pesa > Lipa na M-Pesa > Pay Bill. Enter the business number and account number provided.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Confirm Payment</h4>
+                                    <p class="step-description">After successful payment, return to the KSFP platform and click "Confirm Payment" to update your payment status.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admins Tab -->
+                <div class="tab-pane fade" id="admins" role="tabpanel">
+                    <div class="guideline-section animate-on-scroll">
+                        <div class="section-header">
+                            <div class="section-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div>
+                                <h3 class="section-title">Administrator Access & Management</h3>
+                                <p class="section-description">Complete guide for KSFP system administrators</p>
+                            </div>
+                        </div>
+
+                        <div class="steps-container">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Access Admin Portal</h4>
+                                    <p class="step-description">Navigate to admin-login.html and enter your administrator credentials along with the access code.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">School Verification</h4>
+                                    <p class="step-description">Review and approve school registrations. Verify documents and assign appropriate fee structures based on location and school type.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">Fee Structure Management</h4>
+                                    <p class="step-description">Update fee structures, manage constituency rates, and ensure compliance with government guidelines (CBC: KSh 52,600/term).</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">System Monitoring</h4>
+                                    <p class="step-description">Monitor system performance, payment transactions, and generate comprehensive reports for stakeholders.</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">5</div>
+                                <div class="step-content">
+                                    <h4 class="step-title">User Support</h4>
+                                    <p class="step-description">Handle user queries, resolve issues, and provide technical support to schools and parents.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Tab -->
+                <div class="tab-pane fade" id="faq" role="tabpanel">
+                    <div class="faq-section">
+                        <h3 class="text-center mb-4">Frequently Asked Questions</h3>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                How do I register my school on KSFP?
+                            </div>
+                            <div class="faq-answer">
+                                Visit the school login portal and click "Register New School". Fill in your school's official details, upload required documents, and submit for verification. The process typically takes 24-48 hours.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                What are the current fee rates for CBC Senior Schools?
+                            </div>
+                            <div class="faq-answer">
+                                CBC Senior Schools are charged KSh 52,600 per term as per government guidelines. Free day schools have no fees, while constituency schools like Kiharu (KSh 500/term) and Mumias East (KSh 1,300/term) have special rates.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                How can parents pay school fees?
+                            </div>
+                            <div class="faq-answer">
+                                Parents can pay through M-Pesa, bank transfers, card payments, or cash at designated collection points. The system supports multiple payment methods for convenience.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                What should I do if I forget my password?
+                            </div>
+                            <div class="faq-answer">
+                                Use the "Forgot Password" link on the login page. For administrators, contact the system administrator at noreply@kssfk.com. For schools and parents, follow the password reset instructions sent to your registered email.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                How do I update my school's fee structure?
+                            </div>
+                            <div class="faq-answer">
+                                School administrators can update fee structures through their dashboard. For government-regulated changes, contact KSFP administrators who will implement system-wide updates.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                Is the platform secure for financial transactions?
+                            </div>
+                            <div class="faq-answer">
+                                Yes, KSFP uses bank-level security with SSL encryption, secure payment gateways, and complies with Kenyan data protection regulations. All transactions are monitored and logged.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                How do I generate financial reports?
+                            </div>
+                            <div class="faq-answer">
+                                Schools can generate reports from their dashboard under "Reports" section. Administrators have access to system-wide analytics and can export data in various formats.
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <i class="fas fa-chevron-right"></i>
+                                What if I encounter technical issues?
+                            </div>
+                            <div class="faq-answer">
+                                Contact our support team at noreply@kssfk.com or call +254 768 331 888. Include screenshots and detailed descriptions of the issue for faster resolution.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h3><i class="fas fa-headset me-2"></i>Need Help?</h3>
+            <p>Our support team is here to assist you with any questions or issues you may encounter.</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <h5>Email Support</h5>
+                    <p>noreply@kssfk.com</p>
+                    <small>Response within 24 hours</small>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <h5>Phone Support</h5>
+                    <p>+254 768 331 888</p>
+                    <small>Mon-Fri, 8AM-6PM EAT</small>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <h5>Response Time</h5>
+                    <p>24-48 hours</p>
+                    <small>For urgent issues, call directly</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // FAQ toggle functionality
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('i');
+
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                answer.style.display = 'block';
+                icon.style.transform = 'rotate(90deg)';
+            }
+        }
+
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show back to top button on scroll
+        window.addEventListener('scroll', function() {
+            const backToTopBtn = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+
+                if (elementTop < window.innerHeight && elementBottom > 0) {
+                    element.classList.add('animate');
+                }
+            });
+        }
+
+        // Initial check for elements in view
+        animateOnScroll();
+
+        // Check for elements on scroll
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Tab change handler for animations
+        document.querySelectorAll('#guidelinesTabs .nav-link').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function () {
+                // Reset animations for new tab content
+                const activeTab = document.querySelector(this.getAttribute('data-bs-target'));
+                const animateElements = activeTab.querySelectorAll('.animate-on-scroll');
+
+                animateElements.forEach(element => {
+                    element.classList.remove('animate');
+                    setTimeout(() => {
+                        element.classList.add('animate');
+                    }, 100);
+                });
+            });
+        });
+
+        // Print functionality
+        function printGuidelines() {
+            window.print();
+        }
+
+        // Add print styles
+        const printStyles = `
+            @media print {
+                .back-to-top,
+                .nav-tabs,
+                .header::before {
+                    display: none !important;
+                }
+
+                .guideline-section {
+                    page-break-inside: avoid;
+                    margin-bottom: 2rem;
+                }
+
+                .step {
+                    page-break-inside: avoid;
+                }
+
+                .faq-item {
+                    page-break-inside: avoid;
+                }
+            }
+        `;
+
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = printStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+
+</body>
+</html>

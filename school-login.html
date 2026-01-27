@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Login - KSFP</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --kenya-green: #009639;
+            --kenya-red: #bb0000;
+            --kenya-black: #000000;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="school-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/><rect x="5" y="5" width="10" height="10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23school-pattern)"/></svg>');
+            z-index: 0;
+        }
+
+        /* Enhanced Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-element.book {
+            top: 15%;
+            left: 10%;
+            font-size: 2.5rem;
+            animation-delay: 0s;
+        }
+
+        .floating-element.graduation {
+            top: 25%;
+            right: 15%;
+            font-size: 2rem;
+            animation-delay: 2s;
+        }
+
+        .floating-element.chalkboard {
+            bottom: 25%;
+            left: 20%;
+            font-size: 2.5rem;
+            animation-delay: 4s;
+        }
+
+        .floating-element.students {
+            bottom: 15%;
+            right: 10%;
+            font-size: 2rem;
+            animation-delay: 6s;
+        }
+
+        .floating-element.calculator {
+            top: 50%;
+            left: 50%;
+            font-size: 1.5rem;
+            animation-delay: 1s;
+        }
+
+        .floating-element.award {
+            top: 70%;
+            right: 25%;
+            font-size: 1.8rem;
+            animation-delay: 3s;
+        }
+
+        .floating-element.bus {
+            bottom: 40%;
+            right: 5%;
+            font-size: 2.2rem;
+            animation-delay: 5s;
+        }
+
+        /* Particle Effects */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: particleFloat 10s linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 25%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 40%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 55%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 70%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 85%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 15%; animation-delay: 6s; }
+        .particle:nth-child(8) { left: 30%; animation-delay: 7s; }
+        .particle:nth-child(9) { left: 45%; animation-delay: 8s; }
+        .particle:nth-child(10) { left: 60%; animation-delay: 9s; }
+        .particle:nth-child(11) { left: 75%; animation-delay: 0.5s; }
+        .particle:nth-child(12) { left: 90%; animation-delay: 1.5s; }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.8s;
+            z-index: -1;
+        }
+
+        .login-container:hover::before {
+            left: 100%;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header .logo {
+            font-size: 3rem;
+            color: var(--kenya-green);
+            margin-bottom: 1rem;
+        }
+
+        .login-header h2 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            border-color: var(--kenya-green);
+            box-shadow: 0 0 0 3px rgba(0, 150, 57, 0.1);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--kenya-green), var(--kenya-red));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 150, 57, 0.3);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+            color: #666;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-google, .btn-facebook {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            background: white;
+            color: #666;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .btn-google:hover {
+            border-color: #db4437;
+            color: #db4437;
+            transform: translateY(-1px);
+        }
+
+        .btn-facebook:hover {
+            border-color: #4267B2;
+            color: #4267B2;
+            transform: translateY(-1px);
+        }
+
+        .btn-google i, .btn-facebook i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .links a {
+            color: var(--kenya-green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: var(--kenya-red);
+            text-decoration: underline;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-element.book {
+            top: 10%;
+            left: 10%;
+            font-size: 3rem;
+            animation-delay: 0s;
+        }
+
+        .floating-element.graduation {
+            top: 20%;
+            right: 15%;
+            font-size: 2.5rem;
+            animation-delay: 2s;
+        }
+
+        .floating-element.school {
+            bottom: 20%;
+            left: 15%;
+            font-size: 2rem;
+            animation-delay: 4s;
+        }
+
+        .floating-element.bus {
+            bottom: 10%;
+            right: 10%;
+            font-size: 2.5rem;
+            animation-delay: 6s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translateY(-20px) rotate(5deg) scale(1.05);
+            }
+            50% {
+                transform: translateY(-10px) rotate(-5deg) scale(0.95);
+            }
+            75% {
+                transform: translateY(-25px) rotate(3deg) scale(1.02);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 150, 57, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 150, 57, 0.6);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) translateY(50px);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05) translateY(-10px);
+            }
+            70% {
+                transform: scale(0.9) translateY(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Enhanced form animations */
+        .form-control:focus {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .btn-login:hover {
+            animation: bounceIn 0.6s ease;
+        }
+
+        .error-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .loading-spinner {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            z-index: 10;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: var(--kenya-green);
+        }
+
+        @media (max-width: 576px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem;
+            }
+
+            .login-header .logo {
+                font-size: 2.5rem;
+            }
+        }
+
+        .fee-info {
+            background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--kenya-green);
+        }
+
+        .fee-info h6 {
+            color: var(--kenya-green);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .fee-info p {
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-element book">📚</div>
+        <div class="floating-element graduation">🎓</div>
+        <div class="floating-element chalkboard">📝</div>
+        <div class="floating-element students">👨‍🎓</div>
+        <div class="floating-element calculator">🧮</div>
+        <div class="floating-element award">🏆</div>
+        <div class="floating-element bus">🚌</div>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Login Header -->
+        <div class="login-header">
+            <div class="logo">
+                <i class="fas fa-school"></i>
+            </div>
+            <h2>School Portal</h2>
+            <p>Access your school's dashboard</p>
+        </div>
+
+        <!-- Fee Information -->
+        <div class="fee-info">
+            <h6><i class="fas fa-info-circle me-2"></i>Government Fee Guidelines 2026</h6>
+            <p><strong>CBC Senior Schools:</strong> KSh 52,600 per term</p>
+            <p><strong>Day Schools:</strong> Free education (except special schools)</p>
+            <p><strong>Kiharu Constituency:</strong> KSh 500 per term</p>
+            <p><strong>Mumias East Constituency:</strong> KSh 1,300 per term</p>
+        </div>
+
+        <!-- Alert Container -->
+        <div id="alertContainer"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="school@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        Remember me
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-login" id="loginBtn">
+                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+            </button>
+        </form>
+
+        <!-- Social Login Divider -->
+        <div class="divider">
+            <span>or continue with</span>
+        </div>
+
+        <!-- Social Login Buttons -->
+        <a href="#" class="btn-google" onclick="loginWithGoogle()">
+            <i class="fab fa-google"></i>
+            Continue with Google
+        </a>
+
+        <a href="#" class="btn-facebook" onclick="loginWithFacebook()">
+            <i class="fab fa-facebook-f"></i>
+            Continue with Facebook
+        </a>
+
+        <!-- Links -->
+        <div class="links">
+            <a href="#" onclick="showForgotPassword()">Forgot Password?</a>
+            <a href="school-registration.html">Register School</a>
+            <a href="landing-page.html">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Form handling
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Show loading
+            showLoading(true);
+            clearAlerts();
+
+            try {
+                // Simulate API call (replace with actual API endpoint)
+                const response = await mockLoginAPI(email, password);
+
+                if (response.success) {
+                    // Store session info
+                    localStorage.setItem('schoolUser', JSON.stringify({
+                        email: email,
+                        schoolId: response.schoolId,
+                        schoolName: response.schoolName,
+                        loginTime: new Date().toISOString()
+                    }));
+
+                    if (rememberMe) {
+                        localStorage.setItem('rememberSchoolLogin', 'true');
+                    }
+
+                    showAlert('Login successful! Redirecting...', 'success');
+
+                    // Redirect to school dashboard
+                    setTimeout(() => {
+                        window.location.href = 'school-dashboard.html';
+                    }, 1500);
+
+                } else {
+                    showAlert(response.message || 'Login failed. Please check your credentials.', 'danger');
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Network error. Please try again later.', 'danger');
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        // Mock login API (replace with real API)
+        async function mockLoginAPI(email, password) {
+            // Simulate network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // Mock validation
+            if (email === 'admin@school.com' && password === 'password') {
+                return {
+                    success: true,
+                    schoolId: 'school-001',
+                    schoolName: 'Example School',
+                    userType: 'school_admin'
+                };
+            } else {
+                return {
+                    success: false,
+                    message: 'Invalid email or password'
+                };
+            }
+        }
+
+        // Social login functions
+        function loginWithGoogle() {
+            showAlert('Google login integration coming soon!', 'info');
+            // Implement Google OAuth login
+        }
+
+        function loginWithFacebook() {
+            showAlert('Facebook login integration coming soon!', 'info');
+            // Implement Facebook OAuth login
+        }
+
+        // Utility functions
+        function showLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'flex' : 'none';
+            document.getElementById('loginBtn').disabled = show;
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+            `;
+            alertContainer.appendChild(alertDiv);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentElement) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        function clearAlerts() {
+            document.getElementById('alertContainer').innerHTML = '';
+        }
+
+        function showForgotPassword() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                showAlert('Please enter your email address first.', 'warning');
+                document.getElementById('email').focus();
+                return;
+            }
+
+            showAlert('Password reset link sent to your email!', 'success');
+            // Implement forgot password functionality
+        }
+
+        // Check for remembered login
+        document.addEventListener('DOMContentLoaded', function() {
+            const remembered = localStorage.getItem('rememberSchoolLogin');
+            const userData = localStorage.getItem('schoolUser');
+
+            if (remembered && userData) {
+                const user = JSON.parse(userData);
+                document.getElementById('email').value = user.email;
+                document.getElementById('rememberMe').checked = true;
+            }
+
+            // Add input animations
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+        });
+
+        // Add enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') {
+                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+
+</body>
+</html>
