@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>KSFP — Terms (Viewer)</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+      body{font-family:Arial,Helvetica,sans-serif;color:#222;padding:18px;background:#f7f9fb}
+      .card{background:#fff;padding:18px;border-radius:8px;max-width:900px;margin:18px auto;box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+      .loading{color:#666}
+      pre{white-space:pre-wrap;word-break:break-word}
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Terms & Conditions</h1>
+      <p class="loading" id="loading">Loading terms…</p>
+      <article id="termsContent" style="display:none"></article>
+      <p style="margin-top:12px">If the viewer fails, you can open the raw file: <a href="/docs/terms-and-conditions.md" target="_blank">Open raw Terms & Conditions</a></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      (async function(){
+        try{
+          const r = await fetch('/docs/terms-and-conditions.md');
+          if(!r.ok) throw new Error('failed');
+          const md = await r.text();
+          const html = marked.parse(md);
+          const container = document.getElementById('termsContent');
+          container.innerHTML = html;
+          document.getElementById('loading').style.display = 'none';
+          container.style.display = 'block';
+        }catch(e){
+          document.getElementById('loading').textContent = 'Unable to load terms preview.';
+          console.error(e);
+        }
+      })();
+    </script>
+  </body>
+</html>

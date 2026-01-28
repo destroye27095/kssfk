@@ -11,7 +11,7 @@
         <li>By signing you consent to the platform's policies; see the full legal Terms for details.</li>
       </ul>
 
-      <details style="margin-top:8px;">
+      <details id="tc-details" style="margin-top:8px;">
         <summary style="cursor:pointer;">Read more (concise sections)</summary>
         <h4 style="margin:8px 0 4px 0;">Privacy</h4>
         <p style="margin:0 0 8px 0;">We store limited personal data to operate the service. We do not share your payment details without consent except where required by law.</p>
@@ -21,7 +21,7 @@
         <p style="margin:0 0 8px 0;">We act as a platform; schools and payment providers are responsible for final receipts. Keep transaction receipts.</p>
       </details>
 
-      <p style="margin-top:8px; font-size:13px;">For the full legal Terms & Conditions see <a href="/docs/terms-and-conditions.md" target="_blank">the full document</a>.</p>
+      <p style="margin-top:8px; font-size:13px;">For the full legal Terms & Conditions see <a href="/docs/terms-and-conditions.md" target="_blank">the full document</a> or open a readable view: <a href="/terms-viewer.html" target="_blank">Open in viewer</a>.</p>
     </div>
 
     <label style="display:block; margin-bottom:8px;">Full name</label>
@@ -35,6 +35,11 @@
         <button id="tc-save" class="btn btn-primary">Accept & Continue</button>
         <button id="tc-cancel" class="btn" style="margin-left:auto;">Cancel</button>
       </div>
+    </div>
+
+    <div style="margin-top:10px; font-size:13px; display:flex; gap:8px; align-items:center;">
+      <a href="/terms-viewer.html" target="_blank" class="btn btn-link">Read full terms</a>
+      <span style="color:#666; font-size:13px; margin-left:auto">Mobile: tap "Read more" to expand</span>
     </div>
 
     <input type="hidden" id="tc-user-id" />
