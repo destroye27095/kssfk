@@ -28,6 +28,7 @@ const authMiddleware = require('./middleware/auth');
 
 // Routes
 app.use('/api/schools', require('./routes/schools'));
+app.use('/api/auth', require('./routes/auth'));
 app.use('/api/admin', authMiddleware, require('./routes/admin'));
 app.use('/api/payments', require('./routes/payments'));
 app.use('/api/uploads', require('./routes/uploads'));
