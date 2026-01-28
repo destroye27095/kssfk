@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Payment Methods Demo - KSFP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>body{padding:24px;font-family:Segoe UI,Arial;background:#f4f6f8}.demo-card{max-width:980px;margin:0 auto}</style>
+</head>
+<body>
+  <div class="container demo-card">
+    <h1>Payment Methods Demo</h1>
+    <p>Interactive demo of available payment providers. Click a provider tile to initiate a test request to the backend.</p>
+
+    <div class="card p-3 mb-3">
+      <div id="payment-methods-block"></div>
+    </div>
+
+    <div class="card p-3">
+      <h5>Test Controls</h5>
+      <p>Use the browser console to inspect initiation responses. This demo posts to <code>/api/payments/initiate/:providerKey</code>.</p>
+    </div>
+  </div>
+
+  <script src="js/mvvm/paymentProviders.js"></script>
+  <script src="js/mvvm/paymentMethodsView.js"></script>
+  <script>
+    (function(){
+      const svc = new PaymentProvidersService({ baseUrl: '/api/payments' });
+      const view = new PaymentMethodsView('#payment-methods-block', svc, {
+        onInitiateResponse(resp, provider){
+          console.log('Demo response', provider, resp);
+          if(resp && resp.redirectUrl) window.open(resp.redirectUrl, '_blank');
+          else alert('Initiated: ' + (resp.transactionId || resp.message || 'OK'));
+        },
+        onError(err, provider){
+          console.error('Demo error', provider, err);
+          alert('Error initiating payment. See console.');
+        }
+      });
+      view.render();
+    })();
+  </script>
+</body>
+</html>

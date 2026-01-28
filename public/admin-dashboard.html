@@ -682,6 +682,14 @@
                 <p>Track and manage school fee payments.</p>
             </div>
 
+                <!-- Embedded Payment Methods Component -->
+                <div class="filter-section mb-3">
+                    <h5 class="mb-2">Accept Payments</h5>
+                    <div id="payment-methods-container">
+                        <div id="payment-methods-block"></div>
+                    </div>
+                </div>
+
             <!-- Payment Stats -->
             <div class="row mb-4">
                 <div class="col-md-3">
@@ -1039,6 +1047,41 @@
 
     <!-- Custom JavaScript -->
     <script>
+
+        <!-- MVVM Payment Scripts -->
+        <script src="js/mvvm/paymentProviders.js"></script>
+        <script src="js/mvvm/paymentMethodsView.js"></script>
+        <script>
+            (function(){
+                function initPaymentMethods(){
+                    try{
+                        const svc = new PaymentProvidersService({ baseUrl: '/api/payments' });
+                        const view = new PaymentMethodsView('#payment-methods-block', svc, {
+                            onInitiateResponse: (resp, provider) => {
+                                console.log('Payment initiation response', provider && provider.key, resp);
+                                if(resp && resp.redirectUrl){
+                                    window.location.href = resp.redirectUrl;
+                                } else {
+                                    // show a toast / alert
+                                    const msg = resp && resp.message ? resp.message : 'Payment initiated';
+                                    alert(msg);
+                                }
+                            },
+                            onError: (err, provider) => {
+                                console.error('Payment initiation error', provider && provider.key, err);
+                                alert('Payment initiation failed. See console for details.');
+                            }
+                        });
+                        view.render();
+                    }catch(e){
+                        console.warn('Payment methods not initialized', e);
+                    }
+                }
+
+                if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initPaymentMethods);
+                else initPaymentMethods();
+            })();
+        </script>
         // Global variables
         let currentSection = 'dashboard';
         let schoolsData = [];

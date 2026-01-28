@@ -104,4 +104,42 @@ router.get('/stats/all', (req, res) => {
     });
 });
 
+// POST initiate payment with provider (stubbed)
+router.post('/initiate/:providerKey', (req, res) => {
+    const providerKey = String(req.params.providerKey || 'generic').toLowerCase();
+    const { amount = 0, currency = 'KES', metadata = {}, returnUrl } = req.body || {};
+
+    try {
+        const payments = readPayments();
+        const txId = `tx-${Date.now()}`;
+        const record = {
+            id: txId,
+            provider: providerKey,
+            amount,
+            currency,
+            metadata,
+            status: 'initiated',
+            createdAt: new Date().toISOString()
+        };
+        payments.push(record);
+        savePayments(payments);
+
+        const response = { status: 'initiated', provider: providerKey, transactionId: txId };
+
+        // provider-specific sample responses
+        if (providerKey === 'paypal') {
+            response.redirectUrl = `https://www.sandbox.paypal.com/checkoutnow?token=${txId}`;
+        } else if (providerKey === 'mpesa') {
+            response.instructions = { type: 'stk_push', message: 'STK Push will be sent to the payer.' };
+        } else {
+            response.message = 'Provider flow started. Complete using provider SDK/webview.';
+        }
+
+        res.json(response);
+    } catch (err) {
+        console.error('Initiate payment error', err);
+        res.status(500).json({ error: 'Failed to initiate payment' });
+    }
+});
+
 module.exports = router;

@@ -1,0 +1,34 @@
+<!-- Payment Methods component: include where you want the available payment options to appear -->
+<div class="payment-methods-component">
+  <div id="payment-methods-block"></div>
+
+  <script>
+    (function(){
+      // Init when DOM ready
+      function initPaymentMethods(){
+        if(typeof PaymentProvidersService === 'undefined' || typeof PaymentMethodsView === 'undefined') return;
+        const svc = new PaymentProvidersService();
+        const view = new PaymentMethodsView('#payment-methods-block', svc, {
+          onInitiateResponse: (resp, provider) => {
+            console.log('Initiation response for', provider.key, resp);
+            // Example: if response contains a redirectUrl, follow it
+            if(resp && resp.redirectUrl){
+              window.location.href = resp.redirectUrl;
+            }
+          },
+          onError: (err, provider) => {
+            console.error('Payment initiation error', provider && provider.key, err);
+            alert('Payment initiation failed. See console for details.');
+          }
+        });
+        view.render();
+      }
+
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', initPaymentMethods);
+      }else{
+        initPaymentMethods();
+      }
+    })();
+  </script>
+</div>
