@@ -113,7 +113,7 @@ router.post('/search', (req, res) => {
     if (grade) filtered = filtered.filter(s => s.grade === grade);
     if (type) filtered = filtered.filter(s => s.type === type);
     if (stream) filtered = filtered.filter(s => s.streams.includes(stream));
-    if (maxFee) filtered = filtered.filter(s => s.monthlyFee <= maxFee);
+    if (maxFee) filtered = filtered.filter(s => s.annualFee <= maxFee);
     
     res.json(filtered);
 });

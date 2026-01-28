@@ -9,8 +9,7 @@ class School {
         this.grade = data.grade; // ECDE, Primary, Secondary, University
         this.type = data.type; // public, private
         this.streams = data.streams || []; // Coed, Boys, Girls
-        this.monthlyFee = data.monthlyFee;
-        this.yearlyFee = data.yearlyFee;
+        this.annualFee = data.annualFee;
         this.phone = data.phone;
         this.email = data.email;
         this.location = data.location;
@@ -55,7 +54,7 @@ class School {
         if (!this.name) errors.push('School name is required');
         if (!this.grade) errors.push('School grade is required');
         if (!this.type) errors.push('School type is required');
-        if (this.monthlyFee < 0) errors.push('Monthly fee cannot be negative');
+        if (this.annualFee < 0) errors.push('Annual fee cannot be negative');
         if (!this.email) errors.push('Email is required');
         if (!this.phone) errors.push('Phone is required');
         
@@ -66,12 +65,11 @@ class School {
     }
     
     /**
-     * Apply fee doubling for private schools (if needed)
+     * Apply fee multiplier for private schools (if needed)
      */
     applyPrivateFeeMultiplier(multiplier = 2) {
         if (this.type === 'private') {
-            this.monthlyFee = this.monthlyFee * multiplier;
-            this.yearlyFee = this.yearlyFee * multiplier;
+            this.annualFee = this.annualFee * multiplier;
         }
         return this;
     }

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS fee_guidelines (
     constituency VARCHAR(100),
     county VARCHAR(100),
 
-    -- Fee Structure (per term in KES)
+    -- Fee Structure (Annual in KES)
     tuition_fee INTEGER DEFAULT 0,
     enrollment_fee INTEGER DEFAULT 0,
     development_fee INTEGER DEFAULT 0,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS school_fees (
     annual_total INTEGER DEFAULT 0,
 
     -- Payment Terms
-    terms_per_year INTEGER DEFAULT 3,
+    billing_period ENUM('monthly', 'quarterly', 'semi-annual', 'annual') DEFAULT 'annual',
     payment_deadlines JSON, -- Store as JSON array of dates
 
     -- Special Conditions
@@ -87,39 +87,39 @@ CREATE TABLE IF NOT EXISTS school_fees (
 INSERT OR REPLACE INTO fee_guidelines
 (school_level, school_type, constituency, county, tuition_fee, enrollment_fee, development_fee, activity_fee, lunch_fee, government_subsidy, is_free, free_lunch, is_cbc_school, is_day_school, is_boarding_school, source)
 VALUES
--- CBC Senior Schools (Competency Based Curriculum)
-('secondary', 'public', NULL, NULL, 52600, 2000, 1500, 1000, 500, 0, FALSE, TRUE, TRUE, FALSE, TRUE, 'Government of Kenya - CBC Implementation 2026'),
+-- CBC Senior Schools (Competency Based Curriculum) - Annual Rates
+('secondary', 'public', NULL, NULL, 157800, 6000, 4500, 3000, 1500, 0, FALSE, TRUE, TRUE, FALSE, TRUE, 'Government of Kenya - CBC Implementation 2026'),
 
 -- Day Schools (Free Education)
 ('primary', 'public', NULL, NULL, 0, 0, 0, 0, 0, 100, TRUE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Free Primary Education'),
 ('secondary', 'public', NULL, NULL, 0, 0, 0, 0, 0, 100, TRUE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Free Secondary Education'),
 
--- Special Constituency Rates
-('primary', 'public', 'Kiharu', 'Muranga', 500, 0, 0, 0, 0, 95, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Kiharu Constituency Program'),
-('secondary', 'public', 'Kiharu', 'Muranga', 500, 0, 0, 0, 0, 95, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Kiharu Constituency Program'),
+-- Special Constituency Rates - Annual Fees
+('primary', 'public', 'Kiharu', 'Muranga', 1500, 0, 0, 0, 0, 95, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Kiharu Constituency Program'),
+('secondary', 'public', 'Kiharu', 'Muranga', 1500, 0, 0, 0, 0, 95, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Kiharu Constituency Program'),
 
-('primary', 'public', 'Mumias East', 'Kakamega', 1300, 0, 0, 0, 0, 85, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Mumias East Constituency Program'),
-('secondary', 'public', 'Mumias East', 'Kakamega', 1300, 0, 0, 0, 0, 85, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Mumias East Constituency Program'),
+('primary', 'public', 'Mumias East', 'Kakamega', 3900, 0, 0, 0, 0, 85, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Mumias East Constituency Program'),
+('secondary', 'public', 'Mumias East', 'Kakamega', 3900, 0, 0, 0, 0, 85, FALSE, TRUE, FALSE, TRUE, FALSE, 'Government of Kenya - Mumias East Constituency Program'),
 
--- Standard Public School Rates (Non-Free Zones)
-('primary', 'public', NULL, NULL, 2500, 500, 300, 200, 0, 70, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Standard Rates'),
-('secondary', 'public', NULL, NULL, 8500, 1000, 800, 500, 0, 60, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Standard Rates'),
+-- Standard Public School Rates (Non-Free Zones) - Annual Rates
+('primary', 'public', NULL, NULL, 7500, 1500, 900, 600, 0, 70, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Standard Rates'),
+('secondary', 'public', NULL, NULL, 25500, 3000, 2400, 1500, 0, 60, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Standard Rates'),
 
--- Private School Rates (No Government Subsidy)
-('primary', 'private', NULL, NULL, 15000, 5000, 3000, 2000, 1500, 0, FALSE, FALSE, FALSE, FALSE, FALSE, 'Private School Association'),
-('secondary', 'private', NULL, NULL, 35000, 8000, 5000, 3000, 2000, 0, FALSE, FALSE, FALSE, FALSE, FALSE, 'Private School Association'),
+-- Private School Rates (No Government Subsidy) - Annual Rates
+('primary', 'private', NULL, NULL, 45000, 15000, 9000, 6000, 4500, 0, FALSE, FALSE, FALSE, FALSE, FALSE, 'Private School Association'),
+('secondary', 'private', NULL, NULL, 105000, 24000, 15000, 9000, 6000, 0, FALSE, FALSE, FALSE, FALSE, FALSE, 'Private School Association'),
 
--- Special Schools (Exceptional Children)
-('primary', 'special', NULL, NULL, 5000, 1000, 500, 300, 0, 50, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Special Education'),
-('secondary', 'special', NULL, NULL, 12000, 2000, 1000, 500, 0, 40, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Special Education'),
+-- Special Schools (Exceptional Children) - Annual Rates
+('primary', 'special', NULL, NULL, 15000, 3000, 1500, 900, 0, 50, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Special Education'),
+('secondary', 'special', NULL, NULL, 36000, 6000, 3000, 1500, 0, 40, FALSE, TRUE, FALSE, FALSE, FALSE, 'Government of Kenya - Special Education'),
 
--- TVET/Technical Schools
-('tvet', 'public', NULL, NULL, 18000, 2000, 1500, 1000, 0, 30, FALSE, FALSE, FALSE, FALSE, TRUE, 'Government of Kenya - TVET Program'),
-('tvet', 'private', NULL, NULL, 45000, 5000, 4000, 3000, 0, 0, FALSE, FALSE, FALSE, FALSE, TRUE, 'Private TVET Association'),
+-- TVET/Technical Schools - Annual Rates
+('tvet', 'public', NULL, NULL, 54000, 6000, 4500, 3000, 0, 30, FALSE, FALSE, FALSE, FALSE, TRUE, 'Government of Kenya - TVET Program'),
+('tvet', 'private', NULL, NULL, 135000, 15000, 12000, 9000, 0, 0, FALSE, FALSE, FALSE, FALSE, TRUE, 'Private TVET Association'),
 
--- University Rates (Approximate)
-('university', 'public', NULL, NULL, 45000, 5000, 3000, 2000, 0, 20, FALSE, FALSE, FALSE, FALSE, TRUE, 'Government of Kenya - University Education'),
-('university', 'private', NULL, NULL, 120000, 15000, 10000, 5000, 0, 0, FALSE, FALSE, FALSE, FALSE, TRUE, 'Private University Association');
+-- University Rates - Annual Rates
+('university', 'public', NULL, NULL, 135000, 15000, 9000, 6000, 0, 20, FALSE, FALSE, FALSE, FALSE, TRUE, 'Government of Kenya - University Education'),
+('university', 'private', NULL, NULL, 360000, 45000, 30000, 15000, 0, 0, FALSE, FALSE, FALSE, FALSE, TRUE, 'Private University Association');
 
 -- =====================================================
 -- UPDATE EXISTING SCHOOLS WITH FEE STRUCTURES
@@ -128,15 +128,15 @@ VALUES
 -- Update schools table to include fee information
 UPDATE schools SET
     annual_tuition = CASE
-        WHEN school_type = 'SECONDARY' AND name LIKE '%CBC%' THEN 52600 * 3
-        WHEN school_type = 'PRIMARY' AND county = 'Muranga' AND sub_county LIKE '%Kiharu%' THEN 500 * 3
-        WHEN school_type = 'SECONDARY' AND county = 'Muranga' AND sub_county LIKE '%Kiharu%' THEN 500 * 3
-        WHEN school_type = 'PRIMARY' AND county = 'Kakamega' AND sub_county LIKE '%Mumias East%' THEN 1300 * 3
-        WHEN school_type = 'SECONDARY' AND county = 'Kakamega' AND sub_county LIKE '%Mumias East%' THEN 1300 * 3
+        WHEN school_type = 'SECONDARY' AND name LIKE '%CBC%' THEN 157800
+        WHEN school_type = 'PRIMARY' AND county = 'Muranga' AND sub_county LIKE '%Kiharu%' THEN 1500
+        WHEN school_type = 'SECONDARY' AND county = 'Muranga' AND sub_county LIKE '%Kiharu%' THEN 1500
+        WHEN school_type = 'PRIMARY' AND county = 'Kakamega' AND sub_county LIKE '%Mumias East%' THEN 3900
+        WHEN school_type = 'SECONDARY' AND county = 'Kakamega' AND sub_county LIKE '%Mumias East%' THEN 3900
         WHEN school_type = 'PRIMARY' AND zone_type = 'ASAL' THEN 0
         WHEN school_type = 'SECONDARY' AND zone_type = 'ASAL' THEN 0
-        WHEN school_type = 'PRIMARY' THEN 2500 * 3
-        WHEN school_type = 'SECONDARY' THEN 8500 * 3
+        WHEN school_type = 'PRIMARY' THEN 7500
+        WHEN school_type = 'SECONDARY' THEN 25500
         ELSE annual_tuition
     END,
     fees_policy = CASE
@@ -157,103 +157,70 @@ WHERE annual_tuition = 0 OR annual_tuition IS NULL;
 -- =====================================================
 
 INSERT OR IGNORE INTO school_fees
-(school_id, tuition_fee, enrollment_fee, development_fee, activity_fee, lunch_fee, term_total, annual_total, terms_per_year, is_free, set_by)
+(school_id, tuition_fee, enrollment_fee, development_fee, activity_fee, lunch_fee, annual_total, billing_period, is_free, set_by)
 SELECT
     s.id,
     CASE
-        WHEN s.school_type = 'SECONDARY' AND s.name LIKE '%CBC%' THEN 52600
-        WHEN s.school_type = 'PRIMARY' AND s.county = 'Muranga' THEN 500
-        WHEN s.school_type = 'SECONDARY' AND s.county = 'Muranga' THEN 500
-        WHEN s.school_type = 'PRIMARY' AND s.county = 'Kakamega' THEN 1300
-        WHEN s.school_type = 'SECONDARY' AND s.county = 'Kakamega' THEN 1300
+        WHEN s.school_type = 'SECONDARY' AND s.name LIKE '%CBC%' THEN 157800
+        WHEN s.school_type = 'PRIMARY' AND s.county = 'Muranga' THEN 1500
+        WHEN s.school_type = 'SECONDARY' AND s.county = 'Muranga' THEN 1500
+        WHEN s.school_type = 'PRIMARY' AND s.county = 'Kakamega' THEN 3900
+        WHEN s.school_type = 'SECONDARY' AND s.county = 'Kakamega' THEN 3900
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 2500
-        WHEN s.school_type = 'SECONDARY' THEN 8500
+        WHEN s.school_type = 'PRIMARY' THEN 7500
+        WHEN s.school_type = 'SECONDARY' THEN 25500
         ELSE 0
     END as tuition_fee,
     CASE
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 500
-        WHEN s.school_type = 'SECONDARY' THEN 1000
+        WHEN s.school_type = 'PRIMARY' THEN 1500
+        WHEN s.school_type = 'SECONDARY' THEN 3000
         ELSE 0
     END as enrollment_fee,
     CASE
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 300
-        WHEN s.school_type = 'SECONDARY' THEN 800
+        WHEN s.school_type = 'PRIMARY' THEN 900
+        WHEN s.school_type = 'SECONDARY' THEN 2400
         ELSE 0
     END as development_fee,
     CASE
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 200
-        WHEN s.school_type = 'SECONDARY' THEN 500
+        WHEN s.school_type = 'PRIMARY' THEN 600
+        WHEN s.school_type = 'SECONDARY' THEN 1500
         ELSE 0
     END as activity_fee,
-    CASE
-        WHEN s.zone_type = 'ASAL' THEN 0
-        ELSE 0
-    END as lunch_fee,
-    -- Term total calculation
+    0 as lunch_fee,
+    -- Annual total calculation
     (CASE
-        WHEN s.school_type = 'SECONDARY' AND s.name LIKE '%CBC%' THEN 52600
-        WHEN s.school_type = 'PRIMARY' AND s.county = 'Muranga' THEN 500
-        WHEN s.school_type = 'SECONDARY' AND s.county = 'Muranga' THEN 500
-        WHEN s.school_type = 'PRIMARY' AND s.county = 'Kakamega' THEN 1300
-        WHEN s.school_type = 'SECONDARY' AND s.county = 'Kakamega' THEN 1300
+        WHEN s.school_type = 'SECONDARY' AND s.name LIKE '%CBC%' THEN 157800
+        WHEN s.school_type = 'PRIMARY' AND s.county = 'Muranga' THEN 1500
+        WHEN s.school_type = 'SECONDARY' AND s.county = 'Muranga' THEN 1500
+        WHEN s.school_type = 'PRIMARY' AND s.county = 'Kakamega' THEN 3900
+        WHEN s.school_type = 'SECONDARY' AND s.county = 'Kakamega' THEN 3900
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 2500
-        WHEN s.school_type = 'SECONDARY' THEN 8500
+        WHEN s.school_type = 'PRIMARY' THEN 7500
+        WHEN s.school_type = 'SECONDARY' THEN 25500
         ELSE 0
     END +
     CASE
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 500
-        WHEN s.school_type = 'SECONDARY' THEN 1000
+        WHEN s.school_type = 'PRIMARY' THEN 1500
+        WHEN s.school_type = 'SECONDARY' THEN 3000
         ELSE 0
     END +
     CASE
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 300
-        WHEN s.school_type = 'SECONDARY' THEN 800
+        WHEN s.school_type = 'PRIMARY' THEN 900
+        WHEN s.school_type = 'SECONDARY' THEN 2400
         ELSE 0
     END +
     CASE
         WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 200
-        WHEN s.school_type = 'SECONDARY' THEN 500
+        WHEN s.school_type = 'PRIMARY' THEN 600
+        WHEN s.school_type = 'SECONDARY' THEN 1500
         ELSE 0
-    END) as term_total,
-    -- Annual total (3 terms)
-    ((CASE
-        WHEN s.school_type = 'SECONDARY' AND s.name LIKE '%CBC%' THEN 52600
-        WHEN s.school_type = 'PRIMARY' AND s.county = 'Muranga' THEN 500
-        WHEN s.school_type = 'SECONDARY' AND s.county = 'Muranga' THEN 500
-        WHEN s.school_type = 'PRIMARY' AND s.county = 'Kakamega' THEN 1300
-        WHEN s.school_type = 'SECONDARY' AND s.county = 'Kakamega' THEN 1300
-        WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 2500
-        WHEN s.school_type = 'SECONDARY' THEN 8500
-        ELSE 0
-    END +
-    CASE
-        WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 500
-        WHEN s.school_type = 'SECONDARY' THEN 1000
-        ELSE 0
-    END +
-    CASE
-        WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 300
-        WHEN s.school_type = 'SECONDARY' THEN 800
-        ELSE 0
-    END +
-    CASE
-        WHEN s.zone_type = 'ASAL' THEN 0
-        WHEN s.school_type = 'PRIMARY' THEN 200
-        WHEN s.school_type = 'SECONDARY' THEN 500
-        ELSE 0
-    END) * 3) as annual_total,
-    3 as terms_per_year,
+    END) as annual_total,
+    'annual' as billing_period,
     CASE WHEN s.zone_type = 'ASAL' THEN TRUE ELSE FALSE END as is_free,
     'system_auto_update'
 FROM schools s

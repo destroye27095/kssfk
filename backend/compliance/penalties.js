@@ -14,7 +14,7 @@ function detectFakeInformation(schoolData) {
         suspiciousFlags.push('Invalid academic rating');
     }
     
-    if (schoolData.monthlyFee && schoolData.monthlyFee < 0) {
+    if (schoolData.annualFee && schoolData.annualFee < 0) {
         suspiciousFlags.push('Negative fee value');
     }
     
@@ -35,15 +35,15 @@ function detectFakeInformation(schoolData) {
  */
 function applyFakePenalty(schoolData) {
     const penaltyPercentage = 0.20; // 20%
-    const penaltyAmount = schoolData.monthlyFee * penaltyPercentage;
+    const penaltyAmount = schoolData.annualFee * penaltyPercentage;
     
     return {
         penaltyId: `penalty-${Date.now()}`,
         schoolId: schoolData.id,
         schoolName: schoolData.name,
-        originalFee: schoolData.monthlyFee,
+        originalFee: schoolData.annualFee,
         penaltyAmount: penaltyAmount,
-        newFee: schoolData.monthlyFee + penaltyAmount,
+        newFee: schoolData.annualFee + penaltyAmount,
         penaltyType: 'Fake Information',
         penaltyPercentage: (penaltyPercentage * 100) + '%',
         appliedDate: new Date().toISOString(),
@@ -58,8 +58,7 @@ function applyFakePenalty(schoolData) {
 function enforcePenalty(schoolData, penalty) {
     return {
         ...schoolData,
-        monthlyFee: penalty.newFee,
-        yearlyFee: (penalty.newFee * 12),
+        annualFee: penalty.newFee,
         penaltyApplied: true,
         penaltyDetails: penalty,
         lastPenaltyDate: new Date().toISOString()

@@ -114,7 +114,7 @@ function renderSchoolsList() {
                 <h5>${school.name}</h5>
                 <p><strong>Level:</strong> ${school.grade} | <strong>Type:</strong> ${school.type}</p>
                 <p><strong>Contact:</strong> ${school.phone} | ${school.email}</p>
-                <p><strong>Monthly Fee:</strong> KES ${school.monthlyFee}</p>
+                <p><strong>Annual Fee:</strong> KES ${school.annualFee}</p>
             </div>
             <div class="school-actions">
                 <button class="btn btn-primary btn-sm" onclick="editSchool('${school.id}')">Edit</button>
@@ -153,8 +153,8 @@ function addSchool() {
             </select>
         </div>
         <div class="form-group">
-            <label>Monthly Fee (KES)</label>
-            <input type="number" class="form-control" id="schoolMonthlyFee" placeholder="Enter monthly fee">
+            <label>Annual Fee (KES)</label>
+            <input type="number" class="form-control" id="schoolAnnualFee" placeholder="Enter annual fee">
         </div>
         <button class="btn btn-success" onclick="submitNewSchool()">Save School</button>
     `;
@@ -339,7 +339,7 @@ function enforceCompliancePenalty(penaltyId) {
 
     const school = adminData.schools.find(s => s.id === penalty.schoolId);
     if (school) {
-        school.monthlyFee += penalty.amount;
+        school.annualFee += penalty.amount;
         school.penaltyApplied = true;
         logActivity('penalty_enforced', { penaltyId, schoolId: penalty.schoolId });
         alert('Penalty enforced on ' + school.name);
