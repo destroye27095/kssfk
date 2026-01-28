@@ -108,5 +108,16 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/admin.js"></script>
+        <script src="js/auth/terms.js"></script>
+        <script>
+            (function(){
+                try{
+                    fetch('components/terms-modal.html').then(r=>{ if(r.ok) return r.text(); throw new Error('no modal'); }).then(html=>{
+                        const div = document.createElement('div'); div.innerHTML = html; document.body.appendChild(div.firstElementChild);
+                        if(window.TermsModal && typeof TermsModal.init === 'function') try{ TermsModal.init(); }catch(e){}
+                    }).catch(()=>{});
+                }catch(e){}
+            })();
+        </script>
 </body>
 </html>

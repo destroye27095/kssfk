@@ -32,6 +32,18 @@
         const r = await fetch(`${apiBase}/verify-otp`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ phone, code })});
         const j = await r.json();
         if(r.ok){
+          // if server indicates that the user needs to accept terms, open modal
+          if(j.status === 'needs_terms' || j.needsAcceptance){
+            this.show('Please accept Terms & Conditions');
+            // show the terms modal (signature capture). pass user id and token
+            if(window.TermsModal && typeof window.TermsModal.show === 'function'){
+              TermsModal.show((j.user && j.user.id) || '', j.token || '');
+            } else {
+              this.show('Terms modal not available');
+            }
+            return;
+          }
+
           this.show('Verified. Token: '+(j.token||''));
           // store token locally
           localStorage.setItem('kssfk_token', j.token);
