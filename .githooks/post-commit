@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Post-commit hook: run node autopush
+SCRIPT_DIR="$(git rev-parse --show-toplevel)/scripts"
+node "$SCRIPT_DIR/autopush.js" || exit 0
