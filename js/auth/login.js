@@ -19,7 +19,7 @@
       try{
         const r = await fetch(`${apiBase}/send-otp`, { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ phone })});
         const j = await r.json();
-        if(r.ok) this.show('OTP sent. (demo code: '+(j.demoCode||'')+')');
+        if(r.ok) this.show('OTP sent. Check your phone for the code.');
         else this.show('Error: '+(j.error||r.statusText));
       }catch(e){ this.show('Network error'); console.error(e); }
     },
