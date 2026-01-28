@@ -1,4 +1,21 @@
 #!/usr/bin/env sh
-# Post-commit hook: run node autopush
-SCRIPT_DIR="$(git rev-parse --show-toplevel)/scripts"
-node "$SCRIPT_DIR/autopush.js" || exit 0
+# Cross-platform post-commit hook: prefer PowerShell on Windows, else use node autopush
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+SCRIPTS_DIR="$ROOT_DIR/scripts"
+
+if command -v pwsh >/dev/null 2>&1 || command -v powershell >/dev/null 2>&1; then
+	# Use PowerShell to run a safe push (Windows-friendly)
+	if command -v pwsh >/dev/null 2>&1; then
+		pwsh -NoProfile -Command "try { git -C $ROOT_DIR push -u origin main } catch { }"
+	else
+		powershell -NoProfile -Command "try { git -C $ROOT_DIR push -u origin main } catch { }"
+	fi
+else
+	# Fallback to Node helper if available
+	if command -v node >/dev/null 2>&1 && [ -f "$SCRIPTS_DIR/autopush.js" ]; then
+		node "$SCRIPTS_DIR/autopush.js" || true
+	else
+		# As a last resort try git directly
+		git -C "$ROOT_DIR" push -u origin main || true
+	fi
+fi

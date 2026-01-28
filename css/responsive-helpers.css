@@ -1,0 +1,14 @@
+/* Responsive helpers - mobile-first utilities */
+:root{--container-max:1100px}
+.container-responsive{max-width:var(--container-max);margin:0 auto;padding:12px}
+.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:768px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card-responsive{background:#fff;border-radius:8px;padding:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.hide-mobile{display:none}
+@media(min-width:640px){.hide-mobile{display:block}}
+.text-center-mobile{text-align:center}
+@media(min-width:640px){.text-center-mobile{text-align:left}}
+.btn-sm-responsive{padding:6px 10px;font-size:14px;border-radius:6px}
+.flex-stack{display:flex;flex-direction:column;gap:8px}
+@media(min-width:640px){.flex-stack{flex-direction:row;align-items:center}}

@@ -6,6 +6,7 @@
     <title>Admin Panel - KSSFK</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/responsive-helpers.css">
 </head>
 <body>
         <!-- Header / Login Panel -->
@@ -67,64 +68,47 @@
             </div>
         </div>
 
-    <div class="container-fluid mt-5">
-        <div class="row">
-            <!-- Sidebar Navigation -->
-            <div class="col-md-3">
+    <div class="container-responsive mt-4">
+        <div class="grid">
+            <aside class="card-responsive">
                 <nav class="admin-nav">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#schools" onclick="showTab('schools')">Manage Schools</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#uploads" onclick="showTab('uploads')">Approve Uploads</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#payments" onclick="showTab('payments')">Payment Records</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#penalties" onclick="showTab('penalties')">Penalties & Enforcement</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#analytics" onclick="showTab('analytics')">Analytics</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="#schools" onclick="showTab('schools')">Manage Schools</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#uploads" onclick="showTab('uploads')">Approve Uploads</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#payments" onclick="showTab('payments')">Payment Records</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#penalties" onclick="showTab('penalties')">Penalties & Enforcement</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#analytics" onclick="showTab('analytics')">Analytics</a></li>
                     </ul>
                 </nav>
-            </div>
+            </aside>
 
-            <!-- Main Content -->
-            <div class="col-md-9">
-                <!-- Schools Management -->
-                <div id="schools" class="tab-content">
+            <main>
+                <section id="schools" class="tab-content card-responsive">
                     <h2>School Management</h2>
                     <div id="school-list-container"></div>
-                    <button class="btn btn-primary mt-3" onclick="addSchool()">Add New School</button>
-                </div>
+                    <div style="margin-top:12px" class="flex-stack"><button class="btn btn-primary btn-sm-responsive" onclick="addSchool()">Add New School</button></div>
+                </section>
 
-                <!-- Uploads Approval -->
-                <div id="uploads" class="tab-content" style="display:none;">
+                <section id="uploads" class="tab-content card-responsive" style="display:none;">
                     <h2>Approve School Uploads</h2>
                     <div id="uploads-approval-container"></div>
-                </div>
+                </section>
 
-                <!-- Payment Records -->
-                <div id="payments" class="tab-content" style="display:none;">
+                <section id="payments" class="tab-content card-responsive" style="display:none;">
                     <h2>Payment Records</h2>
                     <div id="payments-table-container"></div>
-                </div>
+                </section>
 
-                <!-- Penalties Enforcement -->
-                <div id="penalties" class="tab-content" style="display:none;">
+                <section id="penalties" class="tab-content card-responsive" style="display:none;">
                     <h2>Penalties & Enforcement</h2>
                     <div id="penalties-list-container"></div>
-                </div>
+                </section>
 
-                <!-- Analytics -->
-                <div id="analytics" class="tab-content" style="display:none;">
+                <section id="analytics" class="tab-content card-responsive" style="display:none;">
                     <h2>Platform Analytics</h2>
                     <div id="admin-analytics-container"></div>
-                </div>
-            </div>
+                </section>
+            </main>
         </div>
     </div>
 
