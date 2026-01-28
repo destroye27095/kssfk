@@ -13,6 +13,16 @@
     <p>Interactive demo of available payment providers. Click a provider tile to initiate a test request to the backend.</p>
 
     <div class="card p-3 mb-3">
+      <div style="max-width:640px;margin-bottom:12px">
+        <label style="font-weight:600;display:block;margin-bottom:6px">Amount</label>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+          <input id="demo-amount" type="number" class="form-control" placeholder="1500" style="max-width:200px">
+          <select id="demo-currency" class="form-select" style="max-width:120px">
+            <option value="KES">KES</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
       <div id="payment-methods-block"></div>
     </div>
 
@@ -28,6 +38,11 @@
     (function(){
       const svc = new PaymentProvidersService({ baseUrl: '/api/payments' });
       const view = new PaymentMethodsView('#payment-methods-block', svc, {
+        getPayload: () => {
+          const amount = parseFloat(document.getElementById('demo-amount').value || 0) || 0;
+          const currency = document.getElementById('demo-currency').value || 'KES';
+          return { amount, currency, metadata: {} };
+        },
         onInitiateResponse(resp, provider){
           console.log('Demo response', provider, resp);
           if(resp && resp.redirectUrl) window.open(resp.redirectUrl, '_blank');

@@ -1,19 +1,37 @@
 <!-- Payment Methods component: include where you want the available payment options to appear -->
 <div class="payment-methods-component">
+  <div style="max-width:640px;margin-bottom:12px">
+    <label style="font-weight:600;display:block;margin-bottom:6px">Amount</label>
+    <div class="pmv-controls">
+      <input class="pmv-amount" id="pmv-amount-input" type="number" placeholder="1500" min="0">
+      <select id="pmv-currency" class="form-select" style="width:110px">
+        <option value="KES">KES</option>
+        <option value="USD">USD</option>
+      </select>
+    </div>
+  </div>
+
   <div id="payment-methods-block"></div>
 
   <script>
     (function(){
-      // Init when DOM ready
       function initPaymentMethods(){
         if(typeof PaymentProvidersService === 'undefined' || typeof PaymentMethodsView === 'undefined') return;
         const svc = new PaymentProvidersService();
         const view = new PaymentMethodsView('#payment-methods-block', svc, {
+          getPayload: (provider) => {
+            const amountVal = parseFloat(document.getElementById('pmv-amount-input').value || 0) || 0;
+            const currency = document.getElementById('pmv-currency').value || 'KES';
+            return { amount: amountVal, currency, metadata: { provider: provider.key } };
+          },
           onInitiateResponse: (resp, provider) => {
             console.log('Initiation response for', provider.key, resp);
-            // Example: if response contains a redirectUrl, follow it
             if(resp && resp.redirectUrl){
               window.location.href = resp.redirectUrl;
+            } else if (resp && resp.transactionId){
+              alert('Payment initiated: ' + resp.transactionId);
+            } else {
+              alert('Payment initiated');
             }
           },
           onError: (err, provider) => {
