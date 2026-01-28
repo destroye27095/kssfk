@@ -15,27 +15,55 @@
                     <h3 style="margin:0;color:#1f2937">KSFP Admin</h3>
                     <small style="color:#6b7280">Admin panel — sign in to continue</small>
                 </div>
-                <!-- Inline login panel -->
-                <div class="login-panel card p-3" style="max-width:420px;">
-                    <h5 class="mb-2" style="margin:0 0 8px 0">Sign in</h5>
+                                <!-- Dual panels: Admin sign-in (left) and Schools & Parents check-in (right) -->
+                                <div style="display:flex; gap:16px;">
+                                    <!-- Admin sign-in -->
+                                    <div class="login-panel card p-3" style="flex:0 0 420px;">
+                                        <h5 class="mb-2" style="margin:0 0 8px 0">Admin Sign in</h5>
 
-                    <div class="mb-2">
-                        <label class="form-label">Phone number</label>
-                        <input id="login-phone" class="form-control" placeholder="+2547..." />
-                    </div>
-                    <div class="d-flex gap-2 mb-3">
-                        <button id="send-otp-btn" class="btn btn-primary">Send OTP</button>
-                        <input id="otp-input" class="form-control" placeholder="Enter OTP" style="max-width:140px" />
-                        <button id="verify-otp-btn" class="btn btn-success">Verify</button>
-                    </div>
+                                        <div class="mb-2">
+                                                <label class="form-label">Phone number</label>
+                                                <input id="login-phone" class="form-control" placeholder="+2547..." />
+                                        </div>
+                                        <div class="d-flex gap-2 mb-3">
+                                                <button id="send-otp-btn" class="btn btn-primary">Send OTP</button>
+                                                <input id="otp-input" class="form-control" placeholder="Enter OTP" style="max-width:140px" />
+                                                <button id="verify-otp-btn" class="btn btn-success">Verify</button>
+                                        </div>
 
-                    <div class="text-center my-2">or</div>
-                    <div class="d-grid">
-                        <button id="google-login-btn" class="btn btn-outline-dark">Continue with Google</button>
-                    </div>
+                                        <div class="text-center my-2">or</div>
+                                        <div class="d-grid">
+                                                <button id="google-login-btn" class="btn btn-outline-dark">Continue with Google</button>
+                                        </div>
 
-                    <div id="login-msg" style="margin-top:12px;font-size:13px;color:#555"></div>
-                </div>
+                                        <div id="login-msg" style="margin-top:12px;font-size:13px;color:#555"></div>
+                                    </div>
+
+                                    <!-- Schools & Parents check-in -->
+                                    <div class="card p-3" style="flex:1 1 auto; min-width:320px;">
+                                        <h5 style="margin:0 0 8px 0">Schools & Parents</h5>
+                                        <p style="margin:0 0 8px 0;color:#555">Quick check-in for schools and parents — no admin privileges.</p>
+
+                                        <div class="mb-2">
+                                            <label class="form-label">Your name</label>
+                                            <input id="sp-name" class="form-control" placeholder="Full name" />
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label">School / Relationship</label>
+                                            <input id="sp-affiliation" class="form-control" placeholder="School name or 'Parent'" />
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label">Contact (phone or email)</label>
+                                            <input id="sp-contact" class="form-control" placeholder="+2547... or email@example.com" />
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button id="sp-checkin" class="btn btn-secondary">Check In</button>
+                                            <button id="sp-view-guidelines" class="btn btn-link">Guidelines</button>
+                                        </div>
+
+                                        <div id="sp-msg" style="margin-top:12px;font-size:13px;color:#555"></div>
+                                    </div>
+                                </div>
             </div>
         </div>
 
@@ -109,6 +137,7 @@
     <script src="js/utils.js"></script>
     <script src="js/admin.js"></script>
         <script src="js/auth/terms.js"></script>
+        <script src="js/auth/login.js"></script>
         <script>
             (function(){
                 try{
