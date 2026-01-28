@@ -97,8 +97,9 @@
                             required
                         >
                         <label class="form-check-label" for="termsCheckbox">
-                            I agree to KSFP <a href="/docs/terms-and-conditions.md" target="_blank">Terms & Conditions</a> 
+                            I agree to KSFP <a href="/terms-summary.html" target="_blank">Terms & Conditions</a> 
                             and <a href="/docs/privacy-policy.md" target="_blank">Privacy Policy</a>
+                            <button type="button" id="preview-terms" class="btn btn-link btn-sm" style="padding:0;margin-left:8px">Preview summary</button>
                         </label>
                     </div>
 
@@ -155,6 +156,8 @@
 
     <script>
         const form = document.getElementById('registerForm');
+        const previewBtn = document.getElementById('preview-terms');
+        if(previewBtn) previewBtn.addEventListener('click', ()=>{ window.open('/terms-summary.html','_blank'); });
         
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
